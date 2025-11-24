@@ -19,13 +19,7 @@ one top-level object with the following fields:
 
 Your job:
 - Consolidate all `ingredients` from the provided `recipes` into a single grocery list.
-- If `scale` is provided, scale each recipe's ingredient quantities to the requested servings; otherwise
-    use each recipe's `servings` as given.
-- Sum quantities for identical items (case-insensitive match on `name`).
-- Normalize units when obvious (e.g., convert g <-> kg, ml <-> l) and choose a sensible unit.
-- Group final items into categories: `produce`, `dairy`, `meat`, `seafood`, `bakery`, `pantry`, `spices`, `frozen`, `other`.
-- If an item is missing, include a `notes` field with a short reason
-    or suggested substitution.
+
 
 Output requirements:
 - Respond ONLY with valid JSON (no commentary, no markdown).
@@ -47,9 +41,4 @@ Output requirements:
     }
 }
 
-Be conservative about unit conversions and do not invent arbitrary ingredient names. If an exact consolidation
-is ambiguous, prefer to list the item and add a clear `notes` field explaining the ambiguity.
-
-Do not perform web searches or call external tools to fetch missing ingredient information — operate only on
-the provided payload. The Recipe Scout Agent is responsible for providing recipe ingredient lists.
 """

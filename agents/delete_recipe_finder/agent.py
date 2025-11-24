@@ -9,12 +9,12 @@ from .prompt import RECIPE_FINDER_AGENT_INSTRUCTIONS
 load_dotenv()
 
 # Read the model name from .env
-RECIPE_FINDER_MODEL = os.getenv("RECIPE_FINDER_MODEL", "gemini-2.5-flash-lite") 
+RECIPE_FINDER_AGENT_MODEL = os.getenv("RECIPE_FINDER_AGENT_MODEL", "gemini-2.5-flash-lite")
 
 
 recipe_finder_agent = Agent(
     name="Recipe_Finder_Agent",
-    model=Gemini(model=RECIPE_FINDER_MODEL),
+    model=Gemini(model=RECIPE_FINDER_AGENT_MODEL),
     description="Finds recipes based on user constraints.",
     instruction=RECIPE_FINDER_AGENT_INSTRUCTIONS,
     tools=[google_search],

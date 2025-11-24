@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from google.adk.models.google_llm import Gemini
 from google.adk.agents import Agent
-# from google.adk.tools import google_search
+from google.adk.tools import google_search
 from .prompt import GROCERY_PLANNER_INSTRUCTIONS
 
 # Load environment variables from .env
@@ -17,5 +17,5 @@ grocery_planner_agent = Agent(
     model=Gemini(model=GROCERY_PLANNER_AGENT_MODEL),
     description="Creates categorized grocery lists from recipes.",
     instruction=GROCERY_PLANNER_INSTRUCTIONS,
-    # tools=[google_search],
+    tools=[google_search],
 )
