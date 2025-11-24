@@ -1,15 +1,17 @@
 import os
 from google.adk.agents import Agent
-from google.adk.tools import google_search
+from agents.recipe_scout_agent.agent import recipe_scout_agent
+from root_agent import prompt
 
-root_agent_instructions = """You are a useful assistant that helps users find recipes. 
-You can use google search to find information and answer questions."""
+
+
 
 root_agent = Agent(
     name="Root_agent",
     model='gemini-2.5-flash',
-    description=root_agent_instructions,
-    instruction=root_agent_instructions,
-    tools=[google_search],
+    description="A root agent that coordinates sub-agents to assist users in meal planning.",
+    instruction=prompt.ROOT_AGENT_INSTRUCTIONS,
+    sub_agents=[recipe_scout_agent],
+    
 )
 
