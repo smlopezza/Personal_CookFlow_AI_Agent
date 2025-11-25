@@ -16,4 +16,5 @@ batch_cooking_agent = Agent(
     model=Gemini(model=BATCH_COOKING_MODEL),
     description="Plan to prepare meals in batches to save time and effort while ensuring variety and nutritional balance.",
     instruction=BATCH_COOKING_INSTRUCTIONS,
+    output_key="batch_cooking_plan", 
 )

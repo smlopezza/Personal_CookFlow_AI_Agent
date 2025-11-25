@@ -16,4 +16,5 @@ user_preferences_agent = Agent(
     model=Gemini(model=USER_PREFERENCES_MODEL),
     description="Ask the user about their dietary preferences, restrictions, and favorite cuisines to tailor meal plans accordingly.",
     instruction=USER_PREFERENCES_INSTRUCTIONS,
+    output_key="user_preferences", # The result will be stored under this key in the overall agent response
 )

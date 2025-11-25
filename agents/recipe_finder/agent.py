@@ -18,4 +18,5 @@ recipe_finder_agent = Agent(
     description="Finds recipes based on user constraints.",
     instruction=RECIPE_FINDER_AGENT_INSTRUCTIONS,
     tools=[google_search],
+    output_key="recipes",  
 )

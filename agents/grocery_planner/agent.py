@@ -18,4 +18,5 @@ grocery_planner_agent = Agent(
     description="Creates categorized grocery lists from recipes.",
     instruction=GROCERY_PLANNER_INSTRUCTIONS,
     tools=[google_search],
+    output_key="grocery_list",
 )

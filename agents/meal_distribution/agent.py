@@ -16,4 +16,5 @@ meal_distribution_agent = Agent(
     model=Gemini(model=MEAL_DISTRIBUTION_MODEL),
     description="Plan and distribute meals throughout the week based on user preferences and dietary restrictions.",
     instruction=MEAL_DISTRIBUTION_INSTRUCTIONS,
+    output_key="meal_distribution", 
 )
