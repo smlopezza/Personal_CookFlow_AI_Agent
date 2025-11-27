@@ -5,11 +5,11 @@ from google.adk.agents import Agent
 from google.adk.tools.agent_tool import AgentTool # for version google-adk==1.4.1
 
 from google.adk.models.google_llm import Gemini
-from sub_agents.user_preferences.agent import user_preferences_agent
-from sub_agents.recipe_finder.agent import recipe_finder_agent
-from sub_agents.grocery_planner.agent import grocery_planner_agent
-from sub_agents.batch_cooking.agent import batch_cooking_agent
-from sub_agents.meal_distribution.agent import meal_distribution_agent
+from .sub_agents.user_preferences.agent import user_preferences_agent
+from .sub_agents.recipe_finder.agent import recipe_finder_agent
+from .sub_agents.grocery_planner.agent import grocery_planner_agent
+from .sub_agents.batch_cooking.agent import batch_cooking_agent
+from .sub_agents.meal_distribution.agent import meal_distribution_agent
 from .prompt import ROOT_AGENT_INSTRUCTIONS
 
 # Load environment variables from .env file
