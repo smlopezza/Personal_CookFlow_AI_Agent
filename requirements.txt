@@ -1,2 +1,2 @@
-google-adk==1.19.0
-python-dotenv==1.2.1
+google-adk==1.4.1
+python-dotenv==1.2.0
