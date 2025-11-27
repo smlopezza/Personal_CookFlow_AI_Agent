@@ -14,6 +14,50 @@ Input (caller will provide):
     `user_preferences.pantry` to subtract available pantry quantities from needed quantities and
     prefer pantry-first substitutions.
 
+Input schema (MUST be valid JSON only):
+Return a single JSON object with the following shape (example):
+
+{
+    "recipes": [
+        {
+            "id": "string",
+            "name": "string",
+            "servings": number,
+            "total_time_minutes": number | null,
+            "source_url": "string",
+            "ingredients": [
+                {
+                    "name": "string",
+                    "quantity": number | null,
+                    "unit": "string | null",
+                    "category": "string (optional)",
+                    "notes": "string (optional)"
+                }
+            ]
+        }
+    ],
+    "user_preferences": {
+        "user_id": "string (optional)",
+        "profile": {
+            "household_size": number (optional),
+            "servings_default": number (optional)
+        },
+        "dietary": {
+            "diet": "string | null (optional)",
+            "allergies": ["string"] (optional),
+            "dislikes": ["string"] (optional)
+        },
+        "pantry": [
+            { "name": "string", "quantity": number, "unit": "string" }
+        ]
+    }
+}
+
+Notes:
+- The `recipes` array is REQUIRED and should match the Recipe Finder output schema.
+- `user_preferences` is optional but when provided, the Grocery Planner MUST subtract pantry
+  quantities and prefer pantry-first substitutions where applicable.
+
 Behavior rules:
 - Consolidate identical ingredients across all recipes by normalizing names (lowercase, trim,
     remove common pluralization). Do NOT invent synonyms; when ambiguous, keep both entries and add
@@ -63,7 +107,7 @@ Formatting rules:
     and explain in `notes`.
 
 Design note:
-- The Grocery Planner's output will be used by the purchasing and notification systems. Make the
+- The Grocery Planner's output will be used by the meal distribution and batch cooking agents. Make the
     output conservative (prefer overestimating small quantities rather than underestimating) and
     include provenance for traceability.
 
