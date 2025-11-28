@@ -1,6 +1,7 @@
 # Personal CookFlow AI Agent
 
 ![CookFlow Logo](./cookflow_agent/src/cookflow.png)
+Capstone Project submitted as part of the [5-Day AI Agents Intensive Course with Google (Nov 10 - 14, 2025)](https://www.kaggle.com/competitions/agents-intensive-capstone-project/overview)
 
 🍴 **The Kitchen Chaos** <br>
 Meal planning can feel like juggling knives: grocery lists, nutrition goals, and time constraints often push couples and families toward takeout or skipped meals. CookFlow transforms that stress into simplicity: a one‑day batch‑cooking ritual that clears mental clutter and fills your fridge with ready‑to‑go meals for the week.
