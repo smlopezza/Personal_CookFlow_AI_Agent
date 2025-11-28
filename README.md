@@ -1,7 +1,9 @@
 # Personal CookFlow AI Agent
 
+![CookFlow Logo](./cookflow_agent/src/cookflow.png)
+
 🍴 **The Kitchen Chaos** <br>
-Meal planning can feel like juggling knives: grocery lists, nutrition goals, and time constraints often push couples toward takeout or skipped meals. CookFlow transforms that stress into simplicity: a one‑day batch‑cooking ritual that clears mental clutter and fills your fridge with ready‑to‑go meals for the week.
+Meal planning can feel like juggling knives: grocery lists, nutrition goals, and time constraints often push couples and families toward takeout or skipped meals. CookFlow transforms that stress into simplicity: a one‑day batch‑cooking ritual that clears mental clutter and fills your fridge with ready‑to‑go meals for the week.
 
 [Deployed Agent Link](https://cookflow-ai-agent-service-594161647696.us-central1.run.app)
 
@@ -37,11 +39,15 @@ CookFlow isn’t just recipes — it’s infrastructure.
 
 **The result:** a resilient, cloud‑native sous‑chef that grows with your household, balancing technical rigor with everyday usability.
 
-![](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F3517018%2F03a7162d679732ed87dcff7a8f3fa500%2FArchitecture.png?generation=1764246999862561&alt=media)
+![Architecture](./cookflow_agent/src/Architecture.png)
+
 
 🌱 **What’s Next on the Menu**<br>
 - Pantry scanning via barcode or photo
 - Seasonal produce suggestions and local deal matching
 - Voice-first cooking guidance
 - Health app integrations for personalized nutrition
-- A social layer for sharing batch-cook wins and recipessandra
+- A social layer for sharing batch-cook wins and recipes
+
+📹 **See It in Action**<br>
+[![CookFlow Demo](https://img.youtube.com/vi/HuU-sYjRX2U/0.jpg)](https://youtu.be/HuU-sYjRX2U)
