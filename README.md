@@ -8,6 +8,9 @@ Meal planning can feel like juggling knives: grocery lists, nutrition goals, and
 
 [Deployed Agent Link](https://cookflow-ai-agent-service-594161647696.us-central1.run.app)
 
+📹 **See It in Action**<br>
+[![CookFlow Demo](https://img.youtube.com/vi/HuU-sYjRX2U/0.jpg)](https://youtu.be/HuU-sYjRX2U)
+
 👩‍🍳 **Enter the Sous‑Chef Agent**<br>
 Static apps give you recipes. Agents adapt to your life. CookFlow acts like a smart sous‑chef: learning your preferences and remembering past meals so you don’t repeat too often. It guides you through prep with just enough structure to keep things flowing, not rigid, but collaborative.
 
@@ -42,6 +45,33 @@ CookFlow isn’t just recipes — it’s infrastructure.
 
 ![Architecture](./cookflow_agent/src/Architecture.png)
 
+📊 **Testing the Sous‑Chef**<br>
+No agent is complete without tasting its own recipes. To evaluate CookFlow, I reached out to people in my network for hands‑on testing.
+[Download Analyzed Conversations](./cookflow_agent/src/CookFlow_Agent_Conversations.docx)
+
+
+- *Limitations:* With a small, familiar sample group, results are preliminary and may skew positive. <br>
+
+- *Survey responses:* 4 participants shared structured feedback on usability, clarity, and recipe relevance. <br>
+&nbsp; - Ease of use: Most testers found the chat interface intuitive, with average ratings of 4.25/5. <br>
+&nbsp; - Mealplan success: In the majority of conversations, the agent produced complete weekly mealplans; a smaller subset stalled or returned partial outputs. <br>
+&nbsp; - Stress reduction: Only 2 of the respondents reported some reduction in meal‑planning stress. <br>
+&nbsp; - Strengths: Clear grocery lists with quantities, organized workflows, and cultural recipe variety were praised. <br>
+&nbsp; - Limitations: Slow response times, occasional errors retrieving recipes, limited memory of servings, and mobile usability issues. <br>
+&nbsp; - Overall satisfaction: Survey participants rated their experience neutral (3.75/5), with one of them highlighting critical gaps. <br>
+&nbsp; - Users appreciated the intuitive prompts and smooth orchestration across agents, though they noted opportunities for broader recipe variety and more nuanced pantry handling. <br> <br>
+
+- *Conversations analyzed:* 15 real interactions with the agent revealed how well it adapted to preferences and guided cooking flow. <br>
+&nbsp; - Mealplan success: In ~9 of 15 conversations, the agent produced complete weekly mealplans; ~6 stalled or returned partial outputs. <br>
+&nbsp; - Common issues: slow response, missing recipes for specific cuisines, memory gaps, mobile formatting. <br>
+&nbsp; - Strengths: clear grocery lists, structured cooking flow, stress reduction, cultural variety. <br> <br>
+
+- *Pressure testing* <br>
+&nbsp; - The agent handled conversations in Spanish, though inconsistently, as multilingual support was not explicitly designed. <br>
+&nbsp; - One user attempted to access environment variables; the agent correctly safeguarded data, demonstrating resilience against unsafe inputs. <br> <br>
+
+
+**Next steps:** Expand testing to a larger, more diverse audience to validate adaptability and uncover edge cases.
 
 🌱 **What’s Next on the Menu**<br>
 - Pantry scanning via barcode or photo
@@ -50,5 +80,4 @@ CookFlow isn’t just recipes — it’s infrastructure.
 - Health app integrations for personalized nutrition
 - A social layer for sharing batch-cook wins and recipes
 
-📹 **See It in Action**<br>
-[![CookFlow Demo](https://img.youtube.com/vi/HuU-sYjRX2U/0.jpg)](https://youtu.be/HuU-sYjRX2U)
+
