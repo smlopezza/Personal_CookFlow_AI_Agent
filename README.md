@@ -47,7 +47,7 @@ CookFlow isn’t just recipes — it’s infrastructure.
 
 📊 **Testing the Sous‑Chef**<br>
 No agent is complete without tasting its own recipes. To evaluate CookFlow, I reached out to people in my network for hands‑on testing.
-[Download Analyzed Conversations](./cookflow_agent/src/CookFlow_Agent_Conversations.docx)
+[Download Analyzed Conversations](./cookflow_agent/src/CookFlow_Agent_Conversations.txt)
 
 
 - *Limitations:* With a small, familiar sample group, results are preliminary and may skew positive. <br>
