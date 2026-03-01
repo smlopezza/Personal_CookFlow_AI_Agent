@@ -4,6 +4,8 @@ from google.adk.models.google_llm import Gemini
 from google.adk.agents import Agent
 from google.adk.tools import google_search
 from .prompt import RECIPE_FINDER_AGENT_INSTRUCTIONS
+from ...observability import before_model_callback, after_model_callback
+
 
 # Load environment variables from .env
 load_dotenv()
@@ -17,6 +19,8 @@ recipe_finder_agent = Agent(
     model=Gemini(model=RECIPE_FINDER_MODEL),
     description="Search for recipes in google based on user constraints.",
     instruction=RECIPE_FINDER_AGENT_INSTRUCTIONS,
+    before_model_callback=before_model_callback,   
+    after_model_callback=after_model_callback,
     tools=[google_search],
     output_key="recipes",  
 )

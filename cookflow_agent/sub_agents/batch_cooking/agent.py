@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from google.adk.models.google_llm import Gemini
 from google.adk.agents import Agent
 from .prompt import BATCH_COOKING_INSTRUCTIONS
+from ...observability import before_model_callback, after_model_callback  
+
 
 # Load environment variables from .env
 load_dotenv()
@@ -16,5 +18,7 @@ batch_cooking_agent = Agent(
     model=Gemini(model=BATCH_COOKING_MODEL),
     description="Plan to prepare meals in batches to save time and effort while ensuring variety and nutritional balance.",
     instruction=BATCH_COOKING_INSTRUCTIONS,
+    before_model_callback=before_model_callback,   
+    after_model_callback=after_model_callback,
     output_key="batch_cooking_plan", 
 )

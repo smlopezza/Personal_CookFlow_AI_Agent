@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from google.adk.models.google_llm import Gemini
 from google.adk.agents import Agent
 from .prompt import MEAL_DISTRIBUTION_INSTRUCTIONS
+from ...observability import before_model_callback, after_model_callback 
+
 
 # Load environment variables from .env
 load_dotenv()
@@ -16,5 +18,7 @@ meal_distribution_agent = Agent(
     model=Gemini(model=MEAL_DISTRIBUTION_MODEL),
     description="Plan and distribute meals throughout the week based on user preferences and dietary restrictions.",
     instruction=MEAL_DISTRIBUTION_INSTRUCTIONS,
+    before_model_callback=before_model_callback,   
+    after_model_callback=after_model_callback,
     output_key="meal_distribution", 
 )

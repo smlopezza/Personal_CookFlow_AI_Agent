@@ -4,6 +4,8 @@ from google.adk.models.google_llm import Gemini
 from google.adk.agents import Agent
 from google.genai import types
 from .prompt import GROCERY_PLANNER_INSTRUCTIONS
+from ...observability import before_model_callback, after_model_callback 
+
 
 # Load environment variables from .env
 load_dotenv()
@@ -24,5 +26,7 @@ grocery_planner_agent = Agent(
     model=Gemini(model=GROCERY_PLANNER_AGENT_MODEL, retry_options=retry_config),
     description="Creates categorized grocery lists from recipes.",
     instruction=GROCERY_PLANNER_INSTRUCTIONS,
+    before_model_callback=before_model_callback,   
+    after_model_callback=after_model_callback,
     output_key="grocery_list",
 )
