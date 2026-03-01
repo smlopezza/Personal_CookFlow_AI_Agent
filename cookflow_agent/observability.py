@@ -1,20 +1,15 @@
-import logging
 import json
+import sys
 import time
+
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.models.llm_request import LlmRequest
 from google.adk.models.llm_response import LlmResponse
 
-# Cloud Run ships stdout logs to Cloud Logging automatically.
-# Use JSON format so log entries are structured and queryable.
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(message)s"  # raw JSON — Cloud Logging parses it
-)
-logger = logging.getLogger("cookflow")
+
 
 def log(agent: str, event: str, payload: dict):
-    logger.info(json.dumps({"agent": agent, "event": event, **payload}))
+    print(json.dumps({"agent": agent, "event": event, **payload}), flush=True)
 
 
 def before_model_callback(callback_context: CallbackContext, llm_request: LlmRequest):
