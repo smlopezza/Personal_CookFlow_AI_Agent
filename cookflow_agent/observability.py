@@ -41,14 +41,14 @@ def after_model_callback(callback_context: CallbackContext, llm_response: LlmRes
     }
 
     # Recipe Finder signals — count recipes returned
-    if agent == "Recipe_finder":
+    if agent == "Recipe_Finder_Agent":
         recipe_count = text.count('"id": "recipe_')
         time_flag = "over your" in text.lower() or "over the" in text.lower()
         payload["recipe_count"] = recipe_count
         payload["time_overage_flagged"] = time_flag
 
     # Batch Cooking signals — detect reheat-only recipes
-    if agent == "Batch_cooking":
+    if agent == "Batch_Cooking_Agent":
         reheat_only = "reheat" in text.lower() and "phase 1" not in text.lower()
         payload["possible_reheat_only_recipe"] = reheat_only
 
