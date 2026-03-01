@@ -11,6 +11,7 @@ from .sub_agents.grocery_planner.agent import grocery_planner_agent
 from .sub_agents.batch_cooking.agent import batch_cooking_agent
 from .sub_agents.meal_distribution.agent import meal_distribution_agent
 from .prompt import ROOT_AGENT_INSTRUCTIONS
+from .observability import before_model_callback, after_model_callback  
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,6 +31,8 @@ root_agent = Agent(
     model=Gemini(model=ROOT_AGENT_MODEL, retry_options=retry_config),
     description="A root agent that coordinates sub-agents to assist users in meal planning.",
     instruction=ROOT_AGENT_INSTRUCTIONS,
+    before_model_callback=before_model_callback,   # ADD THIS
+    after_model_callback=after_model_callback,     # ADD THIS
     tools=[
         AgentTool(user_preferences_agent),
         AgentTool(recipe_finder_agent),
