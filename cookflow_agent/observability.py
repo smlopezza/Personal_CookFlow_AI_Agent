@@ -43,7 +43,7 @@ def after_model_callback(callback_context: CallbackContext, llm_response: LlmRes
         payload["time_overage_flagged"] = time_flag
 
     # Batch Cooking signals — detect reheat-only recipes
-    if agent == "Batch_Cooking_Agent":
+    if agent == "Meal_Prep_Planner_Agent":
         reheat_only = "reheat" in text.lower() and "phase 1" not in text.lower()
         payload["possible_reheat_only_recipe"] = reheat_only
 
