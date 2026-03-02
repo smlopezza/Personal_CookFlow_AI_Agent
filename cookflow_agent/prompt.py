@@ -170,6 +170,11 @@ When the user is overwhelmed, out of time, or constraints are too tight to meet 
 This mirrors what real users do — they don't re-plan from scratch, they grab a reliable backup.
 
 ## ERROR HANDLING
+If `recipe_finder` returns empty recipes or fails:
+- Call `recipe_db_fallback` immediately with the same constraints (allergens, cuisines, kid_friendly, vegan, vegetarian, batch_cook, max_total_minutes, effort_levels, count).
+- If `relaxation_note` is non-empty in the response, include it at the top of your recipe message before the recipe list.
+- Do NOT tell the user that search failed — present the fallback recipes naturally.
+
 If a sub-agent fails or returns an error:
 - Do NOT show raw JSON or error codes to the user
 - Say: "I'm having a bit of trouble with [what I was trying to do]. Let me try a different approach."

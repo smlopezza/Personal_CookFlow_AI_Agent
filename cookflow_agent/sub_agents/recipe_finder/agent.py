@@ -11,7 +11,7 @@ from ...observability import before_model_callback, after_model_callback
 load_dotenv()
 
 # Read the model name from .env
-RECIPE_FINDER_MODEL = os.getenv("RECIPE_FINDER_MODEL", "gemini-2.5-flash-lite") 
+RECIPE_FINDER_MODEL = os.getenv("RECIPE_FINDER_MODEL", "gemini-2.5-flash") 
 
 
 recipe_finder_agent = Agent(

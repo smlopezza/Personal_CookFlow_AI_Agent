@@ -130,8 +130,8 @@ Do NOT search with one broad vague query. Instead:
 ## FALLBACK STRATEGY
 If `google_search` returns poor results for a specific recipe search:
 1. **Try a broader search** — remove the most restrictive soft constraint and search again.
-2. **If search still fails, suggest a well-known recipe from your training knowledge.** Mark it clearly: "Based on a classic recipe (not from web search):"
-3. **NEVER make up a fake recipe.** Only suggest recipes you are confident are real and proven.
+2. **If search still fails, return an empty recipes array** — do NOT make up recipes from training knowledge. The Root Agent will call `recipe_db_fallback` to handle this case.
+3. **NEVER make up a fake recipe.** Return empty results rather than inventing something.
 
 ## HANDLING VAGUE REQUESTS
 If the user says "plan meals for the week" without specifying recipes:
