@@ -1,0 +1,697 @@
+{
+  "version": "1.0",
+  "description": "CookFlow curated recipe database — fallback when Google Search returns no results",
+  "recipes": [
+
+    {
+      "id": "col_001",
+      "name": "Ajiaco Santafereño",
+      "source_url": "https://www.mycolombianrecipes.com/ajiaco-colombian-potato-and-chicken-soup",
+      "servings": 4,
+      "prep_time": 20,
+      "cook_time": 60,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken breast", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "russet potatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yukon gold potatoes", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "corn on the cob", "quantity": 2, "unit": "ears", "category": "produce"},
+        {"item": "guascas", "quantity": 0.25, "unit": "cup dried", "category": "spice", "notes": "substitute: 2 bay leaves + 1 extra potato"},
+        {"item": "chicken broth", "quantity": 8, "unit": "cups", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "cilantro", "quantity": 0.5, "unit": "bunch", "category": "produce"},
+        {"item": "heavy cream", "quantity": 0.25, "unit": "cup", "category": "dairy", "notes": "optional garnish"},
+        {"item": "capers", "quantity": 2, "unit": "tbsp", "category": "pantry", "notes": "optional garnish"}
+      ]
+    },
+
+    {
+      "id": "col_002",
+      "name": "Sudado de Pollo",
+      "source_url": "https://www.mycolombianrecipes.com/sudado-de-pollo-colombian-style-chicken-stew",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 45,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken thighs bone-in", "quantity": 2, "unit": "lbs", "category": "protein"},
+        {"item": "red potatoes", "quantity": 4, "unit": "medium", "category": "produce"},
+        {"item": "roma tomatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 4, "unit": "cloves", "category": "produce"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "achiote powder", "quantity": 0.5, "unit": "tsp", "category": "spice", "notes": "substitute: paprika"},
+        {"item": "chicken broth", "quantity": 2, "unit": "cups", "category": "pantry"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_003",
+      "name": "Sancocho de Pollo",
+      "source_url": "https://www.mycolombianrecipes.com/sancocho-de-pollo-colombian-chicken-sancocho",
+      "servings": 6,
+      "prep_time": 20,
+      "cook_time": 75,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken pieces bone-in", "quantity": 3, "unit": "lbs", "category": "protein"},
+        {"item": "yucca", "quantity": 1, "unit": "lb", "category": "produce", "notes": "substitute: 2 extra potatoes"},
+        {"item": "corn on the cob", "quantity": 2, "unit": "ears", "category": "produce"},
+        {"item": "green plantain", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "yellow potatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 4, "unit": "cloves", "category": "produce"},
+        {"item": "cilantro", "quantity": 0.5, "unit": "bunch", "category": "produce"},
+        {"item": "chicken broth", "quantity": 8, "unit": "cups", "category": "pantry"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "col_004",
+      "name": "Sopa de Lentejas Colombiana",
+      "source_url": "https://www.mycolombianrecipes.com/colombian-lentil-soup",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 45,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "vegan", "vegetarian", "gluten_free", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "green or brown lentils", "quantity": 1.5, "unit": "cups", "category": "pantry"},
+        {"item": "red potatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "roma tomatoes", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "vegetable broth", "quantity": 6, "unit": "cups", "category": "pantry"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"},
+        {"item": "green onion", "quantity": 2, "unit": "stalks", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_005",
+      "name": "Frijoles Colombianos",
+      "source_url": "https://www.mycolombianrecipes.com/frijoles-colombianos",
+      "servings": 6,
+      "prep_time": 15,
+      "cook_time": 90,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "dried red kidney beans", "quantity": 2, "unit": "cups", "category": "pantry"},
+        {"item": "pork belly or bacon", "quantity": 0.5, "unit": "lbs", "category": "protein"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "roma tomatoes", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 4, "unit": "cloves", "category": "produce"},
+        {"item": "green plantain", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_006",
+      "name": "Arroz con Pollo Colombiano",
+      "source_url": "https://www.mycolombianrecipes.com/arroz-con-pollo",
+      "servings": 4,
+      "prep_time": 20,
+      "cook_time": 45,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken thighs boneless", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "long-grain white rice", "quantity": 2, "unit": "cups", "category": "pantry"},
+        {"item": "chicken broth", "quantity": 3, "unit": "cups", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "frozen peas", "quantity": 1, "unit": "cup", "category": "frozen"},
+        {"item": "achiote powder", "quantity": 0.5, "unit": "tsp", "category": "spice", "notes": "substitute: paprika + turmeric"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_007",
+      "name": "Carne Desmechada",
+      "source_url": "https://www.mycolombianrecipes.com/carne-desmechada",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 90,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "flank steak or beef chuck", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "roma tomatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 4, "unit": "cloves", "category": "produce"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "beef broth", "quantity": 2, "unit": "cups", "category": "pantry"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_008",
+      "name": "Pollo Asado Colombiano",
+      "source_url": "https://www.mycolombianrecipes.com/pollo-asado",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 75,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["colombian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "whole chicken", "quantity": 1, "unit": "3-4 lbs", "category": "protein"},
+        {"item": "garlic", "quantity": 6, "unit": "cloves", "category": "produce"},
+        {"item": "orange juice", "quantity": 0.5, "unit": "cup", "category": "produce"},
+        {"item": "lime juice", "quantity": 2, "unit": "tbsp", "category": "produce"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "dried oregano", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "paprika", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_009",
+      "name": "Sopa de Pasta Colombiana",
+      "source_url": "https://www.mycolombianrecipes.com/colombian-pasta-soup",
+      "servings": 4,
+      "prep_time": 10,
+      "cook_time": 35,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["colombian", "kid_friendly", "budget_friendly"],
+      "allergens": ["gluten"],
+      "condition_avoids": {"celiac": ["pasta"]},
+      "ingredients": [
+        {"item": "chicken breast", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "small pasta (fideo or elbow)", "quantity": 1.5, "unit": "cups", "category": "pantry"},
+        {"item": "roma tomatoes", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 0.5, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "chicken broth", "quantity": 6, "unit": "cups", "category": "pantry"},
+        {"item": "ground cumin", "quantity": 0.5, "unit": "tsp", "category": "spice"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "col_010",
+      "name": "Vegan Ajiaco",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 20,
+      "cook_time": 60,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["colombian", "vegan", "vegetarian", "batch_cookable", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "russet potatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yukon gold potatoes", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "corn on the cob", "quantity": 2, "unit": "ears", "category": "produce"},
+        {"item": "guascas", "quantity": 0.25, "unit": "cup dried", "category": "spice", "notes": "substitute: 2 bay leaves + 1 extra potato"},
+        {"item": "vegetable broth", "quantity": 8, "unit": "cups", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "cilantro", "quantity": 0.5, "unit": "bunch", "category": "produce"},
+        {"item": "oat cream", "quantity": 0.25, "unit": "cup", "category": "other", "notes": "nut-free plant-based cream, optional garnish"}
+      ]
+    },
+
+    {
+      "id": "can_001",
+      "name": "Pâté Chinois",
+      "source_url": "https://www.ricardocuisine.com/en/recipes/5842-pate-chinois",
+      "servings": 4,
+      "prep_time": 20,
+      "cook_time": 55,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["canadian", "french_canadian", "batch_cookable", "kid_friendly"],
+      "allergens": ["dairy"],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "lean ground beef", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "russet potatoes", "quantity": 4, "unit": "large", "category": "produce"},
+        {"item": "canned corn kernels", "quantity": 1, "unit": "14oz can", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "butter", "quantity": 3, "unit": "tbsp", "category": "dairy"},
+        {"item": "milk", "quantity": 0.5, "unit": "cup", "category": "dairy"},
+        {"item": "dried thyme", "quantity": 0.5, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "can_002",
+      "name": "Tourtière",
+      "source_url": "https://www.ricardocuisine.com/en/recipes/5838-tourtiere",
+      "servings": 6,
+      "prep_time": 30,
+      "cook_time": 60,
+      "effort_level": "complex",
+      "is_main_dish": true,
+      "tags": ["canadian", "french_canadian", "batch_cookable"],
+      "allergens": ["gluten", "dairy"],
+      "condition_avoids": {"celiac": ["pie crust"]},
+      "ingredients": [
+        {"item": "ground pork", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "ground beef", "quantity": 0.5, "unit": "lb", "category": "protein"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "russet potato", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "ground cloves", "quantity": 0.25, "unit": "tsp", "category": "spice"},
+        {"item": "ground cinnamon", "quantity": 0.25, "unit": "tsp", "category": "spice"},
+        {"item": "dried sage", "quantity": 0.5, "unit": "tsp", "category": "spice"},
+        {"item": "pie crust dough", "quantity": 2, "unit": "sheets", "category": "pantry"}
+      ]
+    },
+
+    {
+      "id": "can_003",
+      "name": "Canadian Butter Chicken",
+      "source_url": "https://www.canadianliving.com/food/recipe/butter-chicken",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 35,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["canadian", "batch_cookable", "kid_friendly"],
+      "allergens": ["dairy"],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken breast boneless", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "canned crushed tomatoes", "quantity": 1, "unit": "28oz can", "category": "pantry"},
+        {"item": "heavy cream", "quantity": 0.5, "unit": "cup", "category": "dairy"},
+        {"item": "butter", "quantity": 2, "unit": "tbsp", "category": "dairy"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 4, "unit": "cloves", "category": "produce"},
+        {"item": "ginger", "quantity": 1, "unit": "inch", "category": "produce"},
+        {"item": "garam masala", "quantity": 2, "unit": "tsp", "category": "spice"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "paprika", "quantity": 1, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "can_004",
+      "name": "Canadian Split Pea Soup",
+      "source_url": "https://www.canadianliving.com/food/recipe/split-pea-soup",
+      "servings": 6,
+      "prep_time": 10,
+      "cook_time": 90,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["canadian", "french_canadian", "batch_cookable", "gluten_free", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "dried yellow split peas", "quantity": 2, "unit": "cups", "category": "pantry"},
+        {"item": "ham hock or diced ham", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "carrots", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "celery", "quantity": 3, "unit": "stalks", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "chicken broth", "quantity": 8, "unit": "cups", "category": "pantry"},
+        {"item": "dried thyme", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "bay leaves", "quantity": 2, "unit": "leaves", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "can_005",
+      "name": "Canadian Beef Stew",
+      "source_url": "https://www.canadianliving.com/food/recipe/beef-stew",
+      "servings": 4,
+      "prep_time": 20,
+      "cook_time": 120,
+      "effort_level": "medium",
+      "is_main_dish": true,
+      "tags": ["canadian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "beef chuck roast", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "carrots", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yellow potatoes", "quantity": 4, "unit": "medium", "category": "produce"},
+        {"item": "celery", "quantity": 3, "unit": "stalks", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "beef broth", "quantity": 4, "unit": "cups", "category": "pantry"},
+        {"item": "tomato paste", "quantity": 2, "unit": "tbsp", "category": "pantry"},
+        {"item": "dried thyme", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "bay leaves", "quantity": 2, "unit": "leaves", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "can_006",
+      "name": "Baked Salmon with Lemon and Herbs",
+      "source_url": "https://www.canadianliving.com/food/fish-and-seafood/recipe/lemon-herb-baked-salmon",
+      "servings": 4,
+      "prep_time": 10,
+      "cook_time": 20,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["canadian", "gluten_free", "dairy_free", "kid_friendly"],
+      "allergens": ["fish"],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "salmon fillets", "quantity": 4, "unit": "6oz fillets", "category": "seafood"},
+        {"item": "lemon", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "fresh dill or parsley", "quantity": 0.25, "unit": "bunch", "category": "produce"},
+        {"item": "olive oil", "quantity": 2, "unit": "tbsp", "category": "pantry"},
+        {"item": "dried oregano", "quantity": 0.5, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "can_007",
+      "name": "Maple Glazed Pork Tenderloin",
+      "source_url": "https://www.canadianliving.com/food/pork/recipe/maple-glazed-pork-tenderloin",
+      "servings": 4,
+      "prep_time": 10,
+      "cook_time": 30,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["canadian", "gluten_free", "dairy_free", "kid_friendly"],
+      "allergens": [],
+      "condition_avoids": {"diabetes": ["maple syrup"]},
+      "ingredients": [
+        {"item": "pork tenderloin", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "maple syrup", "quantity": 3, "unit": "tbsp", "category": "pantry"},
+        {"item": "dijon mustard", "quantity": 2, "unit": "tbsp", "category": "pantry"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "dried rosemary", "quantity": 0.5, "unit": "tsp", "category": "spice"},
+        {"item": "olive oil", "quantity": 1, "unit": "tbsp", "category": "pantry"}
+      ]
+    },
+
+    {
+      "id": "can_008",
+      "name": "Perogies with Caramelized Onions",
+      "source_url": "https://www.canadianliving.com/food/recipe/potato-cheddar-perogies",
+      "servings": 4,
+      "prep_time": 10,
+      "cook_time": 25,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["canadian", "ukrainian_canadian", "vegetarian", "kid_friendly", "budget_friendly"],
+      "allergens": ["gluten", "dairy", "eggs"],
+      "condition_avoids": {"celiac": ["perogies"]},
+      "ingredients": [
+        {"item": "frozen potato cheddar perogies", "quantity": 1, "unit": "lb package", "category": "frozen"},
+        {"item": "yellow onion", "quantity": 2, "unit": "large", "category": "produce"},
+        {"item": "butter", "quantity": 3, "unit": "tbsp", "category": "dairy"},
+        {"item": "sour cream", "quantity": 0.5, "unit": "cup", "category": "dairy"},
+        {"item": "bacon strips", "quantity": 4, "unit": "strips", "category": "protein", "notes": "optional"}
+      ]
+    },
+
+    {
+      "id": "int_001",
+      "name": "Pasta Bake",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 40,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "batch_cookable", "kid_friendly", "budget_friendly"],
+      "allergens": ["gluten", "dairy"],
+      "condition_avoids": {"celiac": ["pasta"]},
+      "ingredients": [
+        {"item": "penne or rigatoni pasta", "quantity": 400, "unit": "g", "category": "pantry"},
+        {"item": "lean ground beef", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "canned crushed tomatoes", "quantity": 1, "unit": "28oz can", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "dried oregano", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "mozzarella cheese", "quantity": 1.5, "unit": "cups shredded", "category": "dairy"}
+      ]
+    },
+
+    {
+      "id": "int_002",
+      "name": "Chicken Stir-Fry",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 20,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": ["soy"],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken breast boneless", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "broccoli florets", "quantity": 2, "unit": "cups", "category": "produce"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "carrots", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "ginger", "quantity": 1, "unit": "inch", "category": "produce"},
+        {"item": "soy sauce", "quantity": 3, "unit": "tbsp", "category": "pantry", "notes": "use tamari for gluten-free"},
+        {"item": "sesame oil", "quantity": 1, "unit": "tsp", "category": "pantry"},
+        {"item": "cornstarch", "quantity": 1, "unit": "tbsp", "category": "pantry"}
+      ]
+    },
+
+    {
+      "id": "int_003",
+      "name": "Sheet Pan Chicken Thighs and Vegetables",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 40,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "chicken thighs bone-in", "quantity": 2, "unit": "lbs", "category": "protein"},
+        {"item": "baby potatoes", "quantity": 1, "unit": "lb", "category": "produce"},
+        {"item": "broccoli florets", "quantity": 2, "unit": "cups", "category": "produce"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 4, "unit": "cloves", "category": "produce"},
+        {"item": "olive oil", "quantity": 3, "unit": "tbsp", "category": "pantry"},
+        {"item": "dried oregano", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "paprika", "quantity": 1, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "int_004",
+      "name": "Beef and Vegetable Soup",
+      "source_url": "classic_recipe",
+      "servings": 6,
+      "prep_time": 20,
+      "cook_time": 90,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "beef stew meat", "quantity": 1.5, "unit": "lbs", "category": "protein"},
+        {"item": "carrots", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "celery", "quantity": 3, "unit": "stalks", "category": "produce"},
+        {"item": "yellow potatoes", "quantity": 3, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "canned diced tomatoes", "quantity": 1, "unit": "14oz can", "category": "pantry"},
+        {"item": "beef broth", "quantity": 6, "unit": "cups", "category": "pantry"},
+        {"item": "frozen green beans", "quantity": 1, "unit": "cup", "category": "frozen"},
+        {"item": "dried thyme", "quantity": 1, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "int_005",
+      "name": "Chicken Fried Rice",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 20,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "kid_friendly", "dairy_free", "budget_friendly"],
+      "allergens": ["soy", "eggs"],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "cooked white rice (day-old)", "quantity": 3, "unit": "cups", "category": "pantry"},
+        {"item": "chicken breast boneless", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "eggs", "quantity": 3, "unit": "large", "category": "dairy"},
+        {"item": "frozen peas and carrots", "quantity": 1, "unit": "cup", "category": "frozen"},
+        {"item": "green onion", "quantity": 3, "unit": "stalks", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "soy sauce", "quantity": 3, "unit": "tbsp", "category": "pantry", "notes": "use tamari for gluten-free"},
+        {"item": "sesame oil", "quantity": 1, "unit": "tsp", "category": "pantry"}
+      ]
+    },
+
+    {
+      "id": "int_006",
+      "name": "Ground Beef and Rice Casserole",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 45,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "batch_cookable", "kid_friendly", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "lean ground beef", "quantity": 1, "unit": "lb", "category": "protein"},
+        {"item": "long-grain white rice", "quantity": 1.5, "unit": "cups", "category": "pantry"},
+        {"item": "beef broth", "quantity": 2.5, "unit": "cups", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "canned diced tomatoes", "quantity": 1, "unit": "14oz can", "category": "pantry"},
+        {"item": "frozen mixed vegetables", "quantity": 1, "unit": "cup", "category": "frozen"},
+        {"item": "paprika", "quantity": 1, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "veg_001",
+      "name": "Chickpea Coconut Curry",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 10,
+      "cook_time": 30,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "vegan", "vegetarian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {"hypothyroidism": ["soy milk"]},
+      "ingredients": [
+        {"item": "canned chickpeas", "quantity": 2, "unit": "15oz cans", "category": "pantry"},
+        {"item": "coconut milk", "quantity": 1, "unit": "14oz can", "category": "pantry"},
+        {"item": "canned diced tomatoes", "quantity": 1, "unit": "14oz can", "category": "pantry"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "ginger", "quantity": 1, "unit": "inch", "category": "produce"},
+        {"item": "spinach", "quantity": 2, "unit": "cups", "category": "produce", "notes": "avoid for hypothyroidism"},
+        {"item": "curry powder", "quantity": 2, "unit": "tsp", "category": "spice"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"}
+      ]
+    },
+
+    {
+      "id": "veg_002",
+      "name": "Vegan Lentil Soup",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 10,
+      "cook_time": 40,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "vegan", "vegetarian", "batch_cookable", "kid_friendly", "gluten_free", "dairy_free", "budget_friendly"],
+      "allergens": [],
+      "condition_avoids": {},
+      "ingredients": [
+        {"item": "red lentils", "quantity": 1.5, "unit": "cups", "category": "pantry"},
+        {"item": "carrots", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "celery", "quantity": 2, "unit": "stalks", "category": "produce"},
+        {"item": "yellow onion", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "canned diced tomatoes", "quantity": 1, "unit": "14oz can", "category": "pantry"},
+        {"item": "vegetable broth", "quantity": 6, "unit": "cups", "category": "pantry"},
+        {"item": "ground cumin", "quantity": 1.5, "unit": "tsp", "category": "spice"},
+        {"item": "smoked paprika", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "lemon juice", "quantity": 2, "unit": "tbsp", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "veg_003",
+      "name": "Black Bean and Vegetable Tacos",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 15,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "vegan", "vegetarian", "kid_friendly", "dairy_free", "budget_friendly"],
+      "allergens": ["gluten"],
+      "condition_avoids": {"celiac": ["flour tortillas"]},
+      "ingredients": [
+        {"item": "canned black beans", "quantity": 2, "unit": "15oz cans", "category": "pantry"},
+        {"item": "corn tortillas", "quantity": 12, "unit": "small", "category": "pantry", "notes": "use corn for gluten-free"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "yellow onion", "quantity": 0.5, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 2, "unit": "cloves", "category": "produce"},
+        {"item": "ground cumin", "quantity": 1, "unit": "tsp", "category": "spice"},
+        {"item": "chili powder", "quantity": 0.5, "unit": "tsp", "category": "spice"},
+        {"item": "avocado", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "lime", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "cilantro", "quantity": 0.25, "unit": "bunch", "category": "produce"}
+      ]
+    },
+
+    {
+      "id": "veg_004",
+      "name": "Vegetable Stir-Fry with Tofu",
+      "source_url": "classic_recipe",
+      "servings": 4,
+      "prep_time": 15,
+      "cook_time": 20,
+      "effort_level": "easy",
+      "is_main_dish": true,
+      "tags": ["international", "vegan", "vegetarian", "dairy_free", "budget_friendly"],
+      "allergens": ["soy"],
+      "condition_avoids": {"hypothyroidism": ["tofu", "broccoli"]},
+      "ingredients": [
+        {"item": "firm tofu", "quantity": 1, "unit": "14oz block", "category": "protein"},
+        {"item": "broccoli florets", "quantity": 2, "unit": "cups", "category": "produce"},
+        {"item": "snap peas", "quantity": 1, "unit": "cup", "category": "produce"},
+        {"item": "red bell pepper", "quantity": 1, "unit": "medium", "category": "produce"},
+        {"item": "carrots", "quantity": 2, "unit": "medium", "category": "produce"},
+        {"item": "garlic", "quantity": 3, "unit": "cloves", "category": "produce"},
+        {"item": "ginger", "quantity": 1, "unit": "inch", "category": "produce"},
+        {"item": "soy sauce", "quantity": 3, "unit": "tbsp", "category": "pantry", "notes": "use tamari for gluten-free"},
+        {"item": "sesame oil", "quantity": 1, "unit": "tsp", "category": "pantry"}
+      ]
+    }
+  ]
+}
