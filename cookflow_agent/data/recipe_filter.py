@@ -271,7 +271,7 @@ def relaxation_message(relaxed: list[str], original_constraints: dict) -> str:
 
 def filter_live_recipes(
     recipes: list[dict],
-    allergens: list[str] = None,
+    allergens: Optional[list[str]] = None,
     vegan: bool = False,
     vegetarian: bool = False,
 ) -> tuple[list[dict], list[str]]:
