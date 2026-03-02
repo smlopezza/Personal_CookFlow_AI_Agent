@@ -174,7 +174,7 @@ def filter_recipes(
         if use_effort and effort_levels:
             results = [r for r in results if _matches_effort(r, effort_levels)]
         if use_batch and batch_cook:
-            results = [r for r in results if _matches_batch_cookable(r)]
+            results = [r for r in results if _matches_batch_cookable(r, batch_cook)]
         return results
 
     # --- Step 3: Progressive relaxation ---
