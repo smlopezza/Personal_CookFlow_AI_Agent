@@ -266,6 +266,43 @@ def relaxation_message(relaxed: list[str], original_constraints: dict) -> str:
 
 
 # --------------------------------------------------------------------------- #
+# filter_live_recipes — hard filters on live Recipe Finder output
+# --------------------------------------------------------------------------- #
+
+def filter_live_recipes(
+    recipes: list[dict],
+    allergens: list[str] = None,
+    vegan: bool = False,
+    vegetarian: bool = False,
+) -> tuple[list[dict], list[str]]:
+    """
+    Apply hard constraint filters to live Recipe Finder output.
+    Called in Root Agent interception step on every Recipe Finder result.
+    Only enforces non-relaxable constraints (allergens, diet).
+    Does NOT touch soft constraints — those are already handled by Recipe Finder LLM.
+
+    Args:
+        recipes:   Raw recipe list from Recipe Finder Agent
+        allergens: Declared allergens — any match = reject recipe
+        vegan:     If True, only pass vegan recipes
+        vegetarian: If True, only pass vegetarian or vegan recipes
+
+    Returns:
+        (filtered_recipes, notes) — notes lists what was removed and why
+    """
+    allergens = allergens or []
+    original_count = len(recipes)
+    filtered = [
+        r for r in recipes
+        if _passes_allergen_check(r, allergens)
+        and _passes_diet_check(r, vegan, vegetarian)
+    ]
+    removed = original_count - len(filtered)
+    notes = [f"removed {removed} recipe(s) violating allergen or dietary constraints"] if removed > 0 else []
+    return filtered, notes
+
+
+# --------------------------------------------------------------------------- #
 # Quick smoke test — run directly: python recipe_filter.py
 # --------------------------------------------------------------------------- #
 
