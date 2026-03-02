@@ -30,14 +30,14 @@ PANTRY_STAPLES = {"salt", "pepper", "oil", "water", "olive oil", "vegetable oil"
 # ─────────────────────────────────────────────────────────────────────────────
 
 def recipe_db_fallback(
-    allergens: list[str] = None,
-    cuisines: list[str] = None,
+    allergens: list[str] | None = None,
+    cuisines: list[str] | None = None,
     kid_friendly: bool = False,
     vegan: bool = False,
     vegetarian: bool = False,
-    cooking_frequency: str = None,
-    max_total_minutes: int = None,
-    effort_levels: list[str] = None,
+    cooking_frequency: str | None = None,
+    max_total_minutes: int | None = None,
+    effort_levels: list[str] | None = None,
     count: int = 4,
 ) -> str:
     """
