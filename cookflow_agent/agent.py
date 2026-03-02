@@ -30,14 +30,14 @@ PANTRY_STAPLES = {"salt", "pepper", "oil", "water", "olive oil", "vegetable oil"
 # ─────────────────────────────────────────────────────────────────────────────
 
 def recipe_db_fallback(
-    allergens: list[str] | None = None,
-    cuisines: list[str] | None = None,
+    allergens: list[str] = [],
+    cuisines: list[str] = [],
     kid_friendly: bool = False,
     vegan: bool = False,
     vegetarian: bool = False,
-    cooking_frequency: str | None = None,
-    max_total_minutes: int | None = None,
-    effort_levels: list[str] | None = None,
+    cooking_frequency: str = "",
+    max_total_minutes: int = 0,
+    effort_levels: list[str] = [],
     count: int = 4,
 ) -> str:
     """
@@ -56,6 +56,7 @@ def recipe_db_fallback(
         effort_levels:     Acceptable effort levels (e.g. ["easy", "medium"])
         count:             Number of recipes to return (3 for Mode A, 4 for Mode B)
     """
+    max_total_minutes = max_total_minutes or None
     batch_cook = (cooking_frequency == "batch")
     recipes, relaxed = filter_recipes(
         count=count,
@@ -79,10 +80,10 @@ def recipe_db_fallback(
 # ─────────────────────────────────────────────────────────────────────────────
 
 def process_recipes(
-      recipes_json: str,
-      allergens: list[str] = None,
-      vegan: bool = False,
-      vegetarian: bool = False,
+    recipes_json: str,                                                                                                         
+    allergens: list[str] = [],
+    vegan: bool = False,
+    vegetarian: bool = False,
   ) -> str:
       """
       Root Agent interception step: apply hard constraint filters to Recipe Finder
