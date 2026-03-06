@@ -20,8 +20,8 @@ def log(agent: str, event: str, payload: dict):
 def before_model_callback(callback_context: CallbackContext, llm_request: LlmRequest):
     """
     Log model call start. Circuit-breaker: if LLM has returned empty responses
-    twice this invocation, short-circuit and return a user-friendly error instead
-    of making another failing call.
+    (not function calls) twice this invocation, short-circuit and return a
+    user-friendly error instead of making another failing call.
     """
     failure_count = callback_context.state.get("_llm_failure_count", 0)
     if failure_count >= _FAILURE_THRESHOLD:
@@ -46,24 +46,30 @@ def before_model_callback(callback_context: CallbackContext, llm_request: LlmReq
         event="model_call_start",
         payload={"invocation_id": callback_context.invocation_id},
     )
-    return None  # None = let the call proceed
+    return None
 
 
 def after_model_callback(callback_context: CallbackContext, llm_response: LlmResponse):
     """
-    Log agent response with latency. Track empty responses for circuit-breaker.
-    Extract key quality signals for monitoring.
+    Log agent response with latency. Track genuinely empty responses for
+    circuit-breaker. Function calls are NOT counted as failures.
     """
     elapsed = round(time.time() - callback_context.state.get("_call_start", time.time()), 2)
     agent = callback_context.agent_name
 
     text = ""
-    if llm_response.content and llm_response.content.parts:
-        part = llm_response.content.parts[0]
-        text = part.text if hasattr(part, "text") and part.text else ""
+    has_function_call = False
 
-    # Circuit-breaker tracking: reset on success, increment on empty response
-    if text:
+    if llm_response.content and llm_response.content.parts:
+        for part in llm_response.content.parts:
+            if hasattr(part, "text") and part.text:
+                text += part.text
+            if hasattr(part, "function_call") and part.function_call:
+                has_function_call = True
+
+    # Circuit-breaker: reset on text response or function call, increment only
+    # on truly empty responses (no text, no function call — genuine LLM failure).
+    if text or has_function_call:
         callback_context.state["_llm_failure_count"] = 0
     else:
         failure_count = callback_context.state.get("_llm_failure_count", 0) + 1
@@ -81,6 +87,7 @@ def after_model_callback(callback_context: CallbackContext, llm_response: LlmRes
         "invocation_id": callback_context.invocation_id,
         "latency_seconds": elapsed,
         "response_length": len(text),
+        "has_function_call": has_function_call,
     }
 
     # Recipe Finder signals
@@ -96,4 +103,4 @@ def after_model_callback(callback_context: CallbackContext, llm_response: LlmRes
         payload["possible_reheat_only_recipe"] = reheat_only
 
     log(agent=agent, event="model_call_complete", payload=payload)
-    return None  # None = don't modify the response
+    return None
