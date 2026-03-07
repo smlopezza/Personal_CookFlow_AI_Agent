@@ -1,7 +1,5 @@
 import os
 import json
-import requests as req_lib
-import concurrent.futures
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.tools.agent_tool import AgentTool  # for google-adk==1.4.1
@@ -76,53 +74,6 @@ def recipe_db_fallback(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# URL validation helpers
-# ─────────────────────────────────────────────────────────────────────────────
-
-_URL_HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; CookFlow/1.0)"}
-
-
-def _check_url(url: str) -> bool:
-    """HEAD request to verify a URL is reachable (non-4xx). 3s timeout."""
-    try:
-        r = req_lib.head(url, allow_redirects=True, timeout=3, headers=_URL_HEADERS)
-        return r.status_code < 400
-    except Exception:
-        return False
-
-
-def _clean_and_validate_urls(recipes: list) -> None:
-    """
-    Mutates recipes in place:
-    1. Replaces vertexaisearch redirect URLs with 'classic_recipe'.
-    2. Validates remaining real URLs with concurrent HEAD requests.
-       Any URL returning 4xx/5xx or timing out is replaced with 'classic_recipe'.
-    """
-    # Step 1: strip redirect URLs
-    for r in recipes:
-        url = r.get("source_url", "")
-        if url and "vertexaisearch.cloud.google.com" in url:
-            r["source_url"] = "classic_recipe"
-
-    # Step 2: collect real URLs to validate
-    to_check = [
-        (i, r["source_url"])
-        for i, r in enumerate(recipes)
-        if r.get("source_url") and r["source_url"] != "classic_recipe"
-    ]
-
-    if not to_check:
-        return
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {executor.submit(_check_url, url): i for i, url in to_check}
-        for future in concurrent.futures.as_completed(futures):
-            i = futures[future]
-            if not future.result():
-                recipes[i]["source_url"] = "classic_recipe"
-
-
-# ─────────────────────────────────────────────────────────────────────────────
 # Tool 2: process_recipes — allergen filter + total_time extraction
 # ALWAYS call this after recipe_finder and BEFORE meal_prep_planner
 # ─────────────────────────────────────────────────────────────────────────────
@@ -157,9 +108,6 @@ def process_recipes(
             "total_time_estimate": 0,
             "relaxation_note": "Could not parse recipe_finder output — calling fallback.",
         })
-
-    # Strip Vertex AI grounding redirect URLs and validate all remaining URLs
-    _clean_and_validate_urls(recipes)
 
     filtered, notes = filter_live_recipes(
         recipes,

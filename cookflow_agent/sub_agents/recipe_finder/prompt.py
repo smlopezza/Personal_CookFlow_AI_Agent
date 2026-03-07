@@ -163,9 +163,14 @@ Return valid JSON. Each recipe MUST include:
   - medium: 30-60 min, 3-4 pans or steps, some active cooking
   - complex: 60+ min, many steps, requires attention throughout
 - pan_count: estimated number of pans/pots needed
-- source_url: The actual recipe website URL (e.g. "https://www.allrecipes.com/recipe/...")
-  IMPORTANT: NEVER use `vertexaisearch.cloud.google.com` redirect URLs as source_url — these are internal grounding redirects, not real recipe pages.
-  If the only URL you have is a vertexaisearch.cloud.google.com redirect, set source_url to "classic_recipe" instead.
+- source_url: The EXACT URL from the google_search result for this recipe.
+  RULES — follow all of them, every time:
+  1. Copy the URL character-for-character from the search result. Do NOT modify it, shorten it, or reconstruct it from memory.
+  2. The URL must be the direct link to the recipe page (e.g. "https://www.mycolombianrecipes.com/ajiaco"). Do NOT use homepage URLs.
+  3. If the search result returned a vertexaisearch.cloud.google.com redirect URL, look for the actual source domain URL in the result snippet or citation text instead. If no direct URL is available, set source_url to "classic_recipe".
+  4. If google_search returned no URL for this recipe at all, set source_url to "classic_recipe".
+  5. NEVER construct, guess, or invent a URL. If you are not 100% certain the URL came directly from the search result, set source_url to "classic_recipe".
+  This URL is shown to users and passed unchanged through the pipeline — it must be real.
 - constraint_notes: any constraints that were relaxed for this recipe
 - ingredients: array of objects, each with:
   - item: ingredient name
@@ -192,5 +197,6 @@ If a recipe source doesn't list exact quantities, ESTIMATE conservatively and ma
 - Do NOT report active time — always report total time including passive cooking
 - Do NOT omit ingredients from the list that appear in the cooking schedule
 - Do NOT substitute neutral/international dishes for Canadian cuisine when Canadian is requested
-- Do NOT use `vertexaisearch.cloud.google.com` redirect URLs as source_url — use "classic_recipe" instead
+- Do NOT construct, guess, or invent URLs — only copy URLs directly from google_search results
+- Do NOT use vertexaisearch.cloud.google.com redirect URLs — find the real source URL in the result or use "classic_recipe"
 """
