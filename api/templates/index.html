@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CookFlow — Plan Your Week</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; }
+    .hero { background: #198754; color: white; padding: 2rem 1rem 1.5rem; text-align: center; }
+    .hero h1 { font-size: 2rem; font-weight: 700; }
+    .hero p { opacity: 0.85; margin-bottom: 0; }
+    .card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .btn-primary { background: #198754; border-color: #198754; }
+    .btn-primary:hover { background: #146c43; border-color: #146c43; }
+    .returning-banner { background: #d1e7dd; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.9rem; }
+    .mode-card { cursor: pointer; border: 2px solid #dee2e6; border-radius: 8px; padding: 1rem; transition: border-color 0.2s; }
+    .mode-card.selected { border-color: #198754; background: #f0faf4; }
+    #ingredients-section { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🍳 CookFlow</h1>
+  <p>Meal planning for busy families</p>
+</div>
+
+<div class="container py-4" style="max-width: 640px;">
+
+  {% if returning_user %}
+  <div class="returning-banner">
+    👋 Welcome back! Your preferences are pre-filled below. Update anything that's changed.
+    <form action="/forget" method="post" class="d-inline">
+      <button type="submit" class="btn btn-link btn-sm p-0 ms-2 text-danger">Forget my data</button>
+    </form>
+  </div>
+  {% endif %}
+
+    <a href="/chat" class="d-block mt-3 text-center text-decoration-none">
+    <div style="border: 2px dashed #198754; border-radius: 12px; padding: 0.85rem 1rem; background: #f0faf4;">
+      <span style="font-size: 1.1rem;">💬</span>
+      <span class="fw-semibold text-success ms-1">Prefer to just talk?</span>
+      <span class="text-muted small ms-1">Chat with CookFlow instead →</span>
+    </div>
+  </a>
+
+  <div class="card p-4">
+    <form action="/plan" method="post" id="planForm">
+
+      <!-- Mode selection -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold">What would you like to do?</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <div class="mode-card selected" id="card-weekly" onclick="selectMode('weekly')">
+              <div class="fw-semibold">📋 Plan my week</div>
+              <div class="text-muted small">Get 4 recipes, grocery list + cooking schedule</div>
+              <input type="radio" name="mode" value="weekly" checked hidden id="mode-weekly">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mode-card" id="card-ingredient" onclick="selectMode('ingredient')">
+              <div class="fw-semibold">🥕 Use what I have</div>
+              <div class="text-muted small">Tell me what's in your fridge</div>
+              <input type="radio" name="mode" value="ingredient" hidden id="mode-ingredient">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ingredients (Mode A only) -->
+      <div id="ingredients-section" class="mb-3">
+        <label for="available_ingredients" class="form-label fw-semibold">What do you have?</label>
+        <input type="text" class="form-control" name="available_ingredients"
+               id="available_ingredients"
+               placeholder="e.g. chicken thighs, black beans, rice"
+               value="{{ profile.available_ingredients if profile and profile.available_ingredients else '' }}">
+        <div class="form-text">Separate ingredients with commas</div>
+      </div>
+
+      <!-- Household size -->
+      <div class="mb-3">
+        <label for="household_size" class="form-label fw-semibold">How many people? <span class="text-danger">*</span></label>
+        <select class="form-select" name="household_size" id="household_size" required>
+          {% for n in [1, 2, 3, 4, 5, 6, 7, 8] %}
+          <option value="{{ n }}"
+            {% if profile and profile.household_size == n %}selected
+            {% elif not profile and n == 4 %}selected{% endif %}>
+            {{ n }} {{ 'person' if n == 1 else 'people' }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Kid-friendly -->
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="kid_friendly" id="kid_friendly" value="true"
+                 {% if profile and profile.kid_friendly %}checked{% endif %}>
+          <label class="form-check-label" for="kid_friendly">
+            👧 Kid-friendly meals
+            <span class="text-muted small d-block">Mild flavours, simple textures, no complex spices</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Allergens -->
+      <div class="mb-3">
+        <label for="allergens" class="form-label fw-semibold">Allergies or foods to strictly avoid</label>
+        <input type="text" class="form-control" name="allergens" id="allergens"
+               placeholder="e.g. nuts, shellfish, gluten"
+               value="{{ profile.allergens | join(', ') if profile and profile.allergens else '' }}">
+        <div class="form-text">⚠️ Safety-critical — these will never be relaxed</div>
+      </div>
+
+      <!-- Cuisines -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Cuisine preferences</label>
+        <div class="row g-2">
+          {% for cuisine in cuisine_options %}
+          <div class="col-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="cuisines"
+                     value="{{ cuisine }}" id="cuisine-{{ cuisine }}"
+                     {% if profile and profile.cultural_preferences and cuisine in profile.cultural_preferences %}checked{% endif %}>
+              <label class="form-check-label" for="cuisine-{{ cuisine }}">{{ cuisine }}</label>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Cooking frequency -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">How do you usually cook?</label>
+        {% for value, label in frequency_options %}
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cooking_frequency"
+                 value="{{ value }}" id="freq-{{ value }}"
+                 {% if profile and profile.cooking_frequency == value %}checked
+                 {% elif not profile and value == 'batch' %}checked{% endif %}>
+          <label class="form-check-label" for="freq-{{ value }}">{{ label }}</label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Max cooking time -->
+      <div class="mb-3">
+        <label for="max_total_minutes" class="form-label fw-semibold">Max cooking time per session</label>
+        <select class="form-select" name="max_total_minutes" id="max_total_minutes">
+          <option value="120">2 hours</option>
+          <option value="180">3 hours</option>
+          <option value="240" selected>4 hours</option>
+          <option value="300">5 hours</option>
+          <option value="360">6 hours+</option>
+        </select>
+      </div>
+
+
+
+      <!-- Remember preferences -->
+      <div class="mb-4">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="remember" id="remember" value="true"
+                 {% if returning_user %}checked{% endif %}>
+          <label class="form-check-label" for="remember">
+            Remember my preferences for next time
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="submitBtn">
+        Find Recipes →
+      </button>
+
+    </form>
+  </div>
+
+
+
+</div>
+
+<script>
+  function selectMode(mode) {
+    document.getElementById('card-weekly').classList.remove('selected');
+    document.getElementById('card-ingredient').classList.remove('selected');
+    document.getElementById('card-' + mode).classList.add('selected');
+    document.getElementById('mode-' + mode).checked = true;
+    document.getElementById('ingredients-section').style.display =
+      mode === 'ingredient' ? 'block' : 'none';
+  }
+
+  document.getElementById('planForm').addEventListener('submit', function() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Finding recipes...';
+  });
+</script>
+
+</body>
+</html>
