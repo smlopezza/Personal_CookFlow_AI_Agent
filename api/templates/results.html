@@ -73,19 +73,6 @@
     </div>
   </div>
 
-  <!-- Email form (Phase 3 — SendGrid) -->
-  <div class="card p-4 no-print">
-    <h6 class="fw-semibold mb-2">📧 Email this plan to yourself</h6>
-    <form action="/email" method="post">
-      <input type="hidden" name="plan" value="{{ plan | e }}">
-      <div class="input-group">
-        <input type="email" class="form-control" name="email"
-               placeholder="your@email.com" required>
-        <button type="submit" class="btn btn-success">Send</button>
-      </div>
-    </form>
-  </div>
-
 </div>
 
 </body>

@@ -41,6 +41,8 @@ app = FastAPI(title="CookFlow")
 
 def render_markdown(text: str) -> str:
     """Convert agent markdown output to HTML. Links open in a new tab."""
+    # Convert bare URLs to markdown links so the renderer picks them up
+    text = re.sub(r'(?<!\()(?<!")(https?://[^\s|<>"]+)', r'[\1](\1)', text)
     html = md.markdown(text, extensions=["tables", "nl2br"])
     # Make all links open in a new tab
     html = re.sub(r'<a href=', '<a target="_blank" rel="noopener noreferrer" href=', html)
