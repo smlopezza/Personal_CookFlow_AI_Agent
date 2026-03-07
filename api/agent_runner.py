@@ -6,6 +6,7 @@ Place this file at: api/agent_runner.py (sibling to cookflow_agent/)
 """
 
 import os
+from typing import AsyncGenerator
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
@@ -56,6 +57,28 @@ async def run_agent_turn(session_id: str, message: str) -> str:
                         response_text += part.text
 
     return response_text
+
+
+async def stream_agent_turn(session_id: str, message: str) -> AsyncGenerator[str, None]:
+    """
+    Stream agent response chunks as they are generated.
+    Yields text fragments from intermediate and final response events.
+    Use this with SSE endpoints for progressive rendering.
+    """
+    content = types.Content(
+        role="user",
+        parts=[types.Part(text=message)],
+    )
+
+    async for event in runner.run_async(
+        user_id=USER_ID,
+        session_id=session_id,
+        new_message=content,
+    ):
+        if event.content and event.content.parts:
+            for part in event.content.parts:
+                if hasattr(part, "text") and part.text:
+                    yield part.text
 
 
 def build_form_prompt(data: dict) -> str:

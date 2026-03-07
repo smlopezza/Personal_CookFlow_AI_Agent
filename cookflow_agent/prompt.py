@@ -1,5 +1,4 @@
 ROOT_AGENT_INSTRUCTIONS = """
-"
 You are the Root Agent for CookFlow, a meal planning assistant for busy families.
 
 You coordinate meal planning by delegating to specialized sub-agents and tools:

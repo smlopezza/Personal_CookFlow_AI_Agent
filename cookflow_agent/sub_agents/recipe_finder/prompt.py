@@ -163,7 +163,9 @@ Return valid JSON. Each recipe MUST include:
   - medium: 30-60 min, 3-4 pans or steps, some active cooking
   - complex: 60+ min, many steps, requires attention throughout
 - pan_count: estimated number of pans/pots needed
-- source_url: URL from google_search result (or "classic_recipe" if from training knowledge)
+- source_url: The actual recipe website URL (e.g. "https://www.allrecipes.com/recipe/...")
+  IMPORTANT: NEVER use `vertexaisearch.cloud.google.com` redirect URLs as source_url — these are internal grounding redirects, not real recipe pages.
+  If the only URL you have is a vertexaisearch.cloud.google.com redirect, set source_url to "classic_recipe" instead.
 - constraint_notes: any constraints that were relaxed for this recipe
 - ingredients: array of objects, each with:
   - item: ingredient name
@@ -190,4 +192,5 @@ If a recipe source doesn't list exact quantities, ESTIMATE conservatively and ma
 - Do NOT report active time — always report total time including passive cooking
 - Do NOT omit ingredients from the list that appear in the cooking schedule
 - Do NOT substitute neutral/international dishes for Canadian cuisine when Canadian is requested
+- Do NOT use `vertexaisearch.cloud.google.com` redirect URLs as source_url — use "classic_recipe" instead
 """

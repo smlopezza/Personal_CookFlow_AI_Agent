@@ -25,11 +25,11 @@ import re
 import markdown as md
 
 from fastapi import FastAPI, Request, Form, Cookie, Response
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from typing import Annotated, Optional
 
-from .agent_runner import create_session, run_agent_turn, build_form_prompt
+from .agent_runner import create_session, run_agent_turn, stream_agent_turn, build_form_prompt
 from cookflow_agent.data.family_context import (
     load_family_context,
     save_family_context,
@@ -37,6 +37,10 @@ from cookflow_agent.data.family_context import (
 )
 
 app = FastAPI(title="CookFlow")
+
+# Pending prompts for streaming: session_id → message
+# Populated by /plan and /confirm, consumed by /stream/* SSE endpoints
+_pending: dict[str, str] = {}
 
 
 def render_markdown(text: str) -> str:
@@ -47,6 +51,8 @@ def render_markdown(text: str) -> str:
     # Make all links open in a new tab
     html = re.sub(r'<a href=', '<a target="_blank" rel="noopener noreferrer" href=', html)
     return html
+
+
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
 CUISINE_OPTIONS = ["Colombian", "Canadian", "Mexican", "Italian", "Chinese", "Indian", "Any"]
@@ -78,7 +84,7 @@ async def index(request: Request, user_id: Annotated[Optional[str], Cookie()] = 
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# POST /plan — Submit preferences → run agent → recipe options
+# POST /plan — Submit preferences → return loading page → stream recipes via SSE
 # ─────────────────────────────────────────────────────────────────────────────
 
 @app.post("/plan", response_class=HTMLResponse)
@@ -96,13 +102,13 @@ async def plan(
     remember: Annotated[bool, Form()] = False,
     user_id: Annotated[Optional[str], Cookie()] = None,
 ):
-    """Process form, call agent, return recipe options for user to select."""
-
-    # Resolve user_id — create one if new user
+    """
+    Process form and return recipes page in loading state.
+    The page connects to /stream/plan via SSE to receive the agent response.
+    """
     if not user_id:
         user_id = str(uuid.uuid4())
 
-    # Parse allergens (comma-separated string → list)
     allergen_list = [a.strip() for a in allergens.split(",") if a.strip()]
 
     form_data = {
@@ -116,7 +122,6 @@ async def plan(
         "kid_friendly": kid_friendly,
     }
 
-    # Save to Firestore if user consented
     if remember:
         save_family_context(user_id, {
             "household_size": household_size,
@@ -129,26 +134,50 @@ async def plan(
             "kid_friendly": kid_friendly,
         })
 
-    # Create ADK session and get recipe options from agent
     session_id = str(uuid.uuid4())
     await create_session(session_id)
 
     prompt = build_form_prompt(form_data)
-    agent_response = await run_agent_turn(session_id, prompt)
+    _pending[session_id] = prompt  # consumed by /stream/plan
 
-    # Set user_id cookie (30 days)
     html_response = templates.TemplateResponse("recipes.html", {
         "request": request,
-        "agent_response": render_markdown(agent_response),
         "session_id": session_id,
         "mode": mode,
+        "loading": True,
+        "stream_url": f"/stream/plan?session_id={session_id}",
     })
     html_response.set_cookie("user_id", user_id, max_age=30 * 24 * 3600)
     return html_response
 
 
+@app.get("/stream/plan")
+async def stream_plan(session_id: str):
+    """
+    SSE endpoint: stream recipe finder output for a pending /plan session.
+    The browser connects here via EventSource after receiving the loading page.
+    """
+    prompt = _pending.pop(session_id, None)
+    if not prompt:
+        return Response("Session not found", status_code=404)
+
+    async def generate():
+        try:
+            async for chunk in stream_agent_turn(session_id, prompt):
+                yield f"data: {json.dumps(chunk)}\n\n"
+        except Exception as e:
+            yield f"data: {json.dumps('[ERROR] ' + str(e))}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
 # ─────────────────────────────────────────────────────────────────────────────
-# POST /confirm — User selects recipe → agent completes pipeline
+# POST /confirm — User selects recipes → return loading page → stream full plan
 # ─────────────────────────────────────────────────────────────────────────────
 
 @app.post("/confirm", response_class=HTMLResponse)
@@ -157,17 +186,46 @@ async def confirm(
     session_id: Annotated[str, Form()],
     selection: Annotated[str, Form()],
 ):
-    """Send user's recipe selection to agent, return full meal plan."""
-    agent_response = await run_agent_turn(session_id, selection)
+    """
+    Store user selection and return results page in loading state.
+    The page connects to /stream/confirm via SSE to receive the full plan.
+    """
+    _pending[session_id] = selection  # consumed by /stream/confirm
 
     return templates.TemplateResponse("results.html", {
         "request": request,
-        "plan": render_markdown(agent_response),
+        "session_id": session_id,
+        "loading": True,
+        "stream_url": f"/stream/confirm?session_id={session_id}",
     })
 
 
+@app.get("/stream/confirm")
+async def stream_confirm(session_id: str):
+    """
+    SSE endpoint: stream full meal plan output for a pending /confirm session.
+    """
+    selection = _pending.pop(session_id, None)
+    if not selection:
+        return Response("Session not found", status_code=404)
+
+    async def generate():
+        try:
+            async for chunk in stream_agent_turn(session_id, selection):
+                yield f"data: {json.dumps(chunk)}\n\n"
+        except Exception as e:
+            yield f"data: {json.dumps('[ERROR] ' + str(e))}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
 # ─────────────────────────────────────────────────────────────────────────────
-# POST /swap — User requests recipe swap → repopulate recipes page
+# POST /swap — User requests recipe swap → stream updated options
 # ─────────────────────────────────────────────────────────────────────────────
 
 @app.post("/swap", response_class=HTMLResponse)
@@ -177,15 +235,38 @@ async def swap(
     swap_request: Annotated[str, Form()],
     mode: Annotated[str, Form()] = "weekly",
 ):
-    """Send swap request to agent, return updated recipe options on the same page."""
-    agent_response = await run_agent_turn(session_id, swap_request)
+    """Store swap request and return recipes page in loading state."""
+    _pending[session_id] = swap_request
 
     return templates.TemplateResponse("recipes.html", {
         "request": request,
-        "agent_response": render_markdown(agent_response),
         "session_id": session_id,
         "mode": mode,
+        "loading": True,
+        "stream_url": f"/stream/swap?session_id={session_id}",
     })
+
+
+@app.get("/stream/swap")
+async def stream_swap(session_id: str):
+    """SSE endpoint: stream updated recipe options after a swap request."""
+    swap_request = _pending.pop(session_id, None)
+    if not swap_request:
+        return Response("Session not found", status_code=404)
+
+    async def generate():
+        try:
+            async for chunk in stream_agent_turn(session_id, swap_request):
+                yield f"data: {json.dumps(chunk)}\n\n"
+        except Exception as e:
+            yield f"data: {json.dumps('[ERROR] ' + str(e))}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
