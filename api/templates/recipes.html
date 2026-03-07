@@ -10,8 +10,26 @@
     .hero { background: #198754; color: white; padding: 1.5rem 1rem; text-align: center; }
     .hero h1 { font-size: 1.5rem; font-weight: 700; margin: 0; }
     .card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .agent-response { white-space: pre-wrap; font-size: 0.95rem; line-height: 1.6; }
     .btn-success { background: #198754; border-color: #198754; }
+    .btn-outline-success { color: #198754; border-color: #198754; }
+    .btn-outline-success:hover { background: #198754; color: white; }
+    .divider { text-align: center; color: #adb5bd; font-size: 0.85rem; margin: 0.5rem 0; }
+
+    /* Recipe options content */
+    .agent-response h1,
+    .agent-response h2,
+    .agent-response h3 { color: #198754; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.4rem; }
+    .agent-response h3 { font-size: 1.05rem; }
+    .agent-response p { margin-bottom: 0.5rem; line-height: 1.7; }
+    .agent-response ol, .agent-response ul { padding-left: 1.3rem; margin-bottom: 0.5rem; }
+    .agent-response li { margin-bottom: 0.25rem; line-height: 1.6; }
+    .agent-response strong { color: #155724; }
+    .agent-response a { color: #198754; text-decoration: underline; word-break: break-all; }
+    .agent-response a:hover { color: #146c43; }
+    .agent-response table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 0.75rem; font-size: 0.9rem; }
+    .agent-response th { background: #198754; color: white; padding: 0.45rem 0.7rem; text-align: left; }
+    .agent-response td { padding: 0.4rem 0.7rem; border-bottom: 1px solid #dee2e6; }
+    .agent-response tr:nth-child(even) td { background: #f0faf4; }
   </style>
 </head>
 <body>
@@ -22,25 +40,37 @@
 
 <div class="container py-4" style="max-width: 640px;">
 
+  <!-- Recipe options -->
   <div class="card p-4 mb-3">
     <h5 class="fw-semibold mb-3">Here are your recipe options</h5>
-    <div class="agent-response">{{ agent_response }}</div>
+    <div class="agent-response">{{ agent_response | safe }}</div>
   </div>
 
-  <div class="card p-4">
+  <!-- Action 1: Build the plan -->
+  <div class="card p-4 mb-2">
+    <p class="text-muted small mb-2">Happy with these options?</p>
     <form action="/confirm" method="post" id="confirmForm">
       <input type="hidden" name="session_id" value="{{ session_id }}">
-      <input type="hidden" name="form_data" value="{{ form_data }}">
+      <input type="hidden" name="selection"
+             value="These look great. Please proceed and build the full meal plan.">
+      <button type="submit" class="btn btn-success w-100 py-2 fw-semibold" id="confirmBtn">
+        Build my plan →
+      </button>
+    </form>
+  </div>
 
-      <label for="selection" class="form-label fw-semibold">
-        Which recipe would you like? (or ask for a swap)
-      </label>
-      <input type="text" class="form-control mb-3" name="selection" id="selection"
-             placeholder="e.g. Option 1, or Swap option 2 for something quicker"
-             required autofocus>
+  <div class="divider">— or —</div>
 
-      <button type="submit" class="btn btn-success w-100 py-2 fw-semibold" id="submitBtn">
-        Build My Plan →
+  <!-- Action 2: Swap / change -->
+  <div class="card p-4">
+    <label class="form-label fw-semibold">Want to change or swap something?</label>
+    <form action="/swap" method="post" id="swapForm">
+      <input type="hidden" name="session_id" value="{{ session_id }}">
+      <input type="text" class="form-control mb-3" name="swap_request"
+             placeholder="e.g. Swap option 2 for something quicker, or make it vegetarian"
+             required>
+      <button type="submit" class="btn btn-outline-success w-100" id="swapBtn">
+        Update recipes
       </button>
     </form>
   </div>
@@ -53,9 +83,14 @@
 
 <script>
   document.getElementById('confirmForm').addEventListener('submit', function() {
-    const btn = document.getElementById('submitBtn');
+    const btn = document.getElementById('confirmBtn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Building your plan...';
+  });
+  document.getElementById('swapForm').addEventListener('submit', function() {
+    const btn = document.getElementById('swapBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Finding alternatives...';
   });
 </script>
 

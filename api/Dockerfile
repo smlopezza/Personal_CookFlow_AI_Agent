@@ -5,7 +5,7 @@ WORKDIR /app
 # Install dependencies
 COPY cookflow_agent/requirements.txt cookflow_agent/requirements.txt
 RUN pip install --no-cache-dir -r cookflow_agent/requirements.txt
-RUN pip install --no-cache-dir fastapi uvicorn[standard] jinja2 python-multipart
+RUN pip install --no-cache-dir fastapi uvicorn[standard] jinja2 python-multipart markdown
 
 # Copy application code
 COPY cookflow_agent/ cookflow_agent/

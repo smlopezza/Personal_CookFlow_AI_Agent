@@ -10,13 +10,45 @@
     .hero { background: #198754; color: white; padding: 1.5rem 1rem; text-align: center; }
     .hero h1 { font-size: 1.5rem; font-weight: 700; margin: 0; }
     .card { border: none; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .plan-content { white-space: pre-wrap; font-size: 0.95rem; line-height: 1.7; }
+
+    /* Plan content styles */
+    .plan-content h1,
+    .plan-content h2,
+    .plan-content h3 { color: #198754; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .plan-content h3 { font-size: 1.1rem; border-bottom: 2px solid #d1e7dd; padding-bottom: 0.25rem; }
+    .plan-content p { margin-bottom: 0.6rem; line-height: 1.7; }
+    .plan-content ul, .plan-content ol { padding-left: 1.4rem; margin-bottom: 0.75rem; }
+    .plan-content li { margin-bottom: 0.3rem; line-height: 1.6; }
+    .plan-content strong { color: #155724; }
+
+    /* Table styling */
+    .plan-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.9rem;
+    }
+    .plan-content th {
+      background: #198754;
+      color: white;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .plan-content td {
+      padding: 0.45rem 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .plan-content tr:nth-child(even) td { background: #f0faf4; }
+
     .btn-outline-success { color: #198754; border-color: #198754; }
     .btn-outline-success:hover { background: #198754; color: white; }
+
     @media print {
       .no-print { display: none; }
       body { background: white; }
       .hero { background: #198754 !important; -webkit-print-color-adjust: exact; }
+      .plan-content th { background: #198754 !important; -webkit-print-color-adjust: exact; }
     }
   </style>
 </head>
@@ -29,7 +61,7 @@
 <div class="container py-4" style="max-width: 640px;">
 
   <div class="card p-4 mb-3">
-    <div class="plan-content">{{ plan }}</div>
+    <div class="plan-content">{{ plan | safe }}</div>
   </div>
 
   <div class="row g-2 no-print mb-4">
@@ -45,7 +77,7 @@
   <div class="card p-4 no-print">
     <h6 class="fw-semibold mb-2">📧 Email this plan to yourself</h6>
     <form action="/email" method="post">
-      <input type="hidden" name="plan" value="{{ plan }}">
+      <input type="hidden" name="plan" value="{{ plan | e }}">
       <div class="input-group">
         <input type="email" class="form-control" name="email"
                placeholder="your@email.com" required>

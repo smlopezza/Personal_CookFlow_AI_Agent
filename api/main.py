@@ -7,6 +7,7 @@ Directory structure:
     agent_runner.py
     templates/
       index.html
+      chat.html
       recipes.html
       results.html
   cookflow_agent/        ← existing package (sibling to api/)
@@ -20,6 +21,8 @@ Deploy: see Dockerfile
 import uuid
 import json
 import os
+import re
+import markdown as md
 
 from fastapi import FastAPI, Request, Form, Cookie, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -34,6 +37,14 @@ from cookflow_agent.data.family_context import (
 )
 
 app = FastAPI(title="CookFlow")
+
+
+def render_markdown(text: str) -> str:
+    """Convert agent markdown output to HTML. Links open in a new tab."""
+    html = md.markdown(text, extensions=["tables", "nl2br"])
+    # Make all links open in a new tab
+    html = re.sub(r'<a href=', '<a target="_blank" rel="noopener noreferrer" href=', html)
+    return html
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
 CUISINE_OPTIONS = ["Colombian", "Canadian", "Mexican", "Italian", "Chinese", "Indian", "Any"]
@@ -79,6 +90,7 @@ async def plan(
     max_total_minutes: Annotated[int, Form()] = 240,
     mode: Annotated[str, Form()] = "weekly",
     available_ingredients: Annotated[str, Form()] = "",
+    kid_friendly: Annotated[bool, Form()] = False,
     remember: Annotated[bool, Form()] = False,
     user_id: Annotated[Optional[str], Cookie()] = None,
 ):
@@ -99,6 +111,7 @@ async def plan(
         "cooking_frequency": cooking_frequency,
         "max_total_minutes": max_total_minutes,
         "available_ingredients": available_ingredients,
+        "kid_friendly": kid_friendly,
     }
 
     # Save to Firestore if user consented
@@ -111,6 +124,7 @@ async def plan(
             "cooking_frequency": cooking_frequency,
             "cooking_day": "",
             "grocery_day": "",
+            "kid_friendly": kid_friendly,
         })
 
     # Create ADK session and get recipe options from agent
@@ -123,7 +137,7 @@ async def plan(
     # Set user_id cookie (30 days)
     html_response = templates.TemplateResponse("recipes.html", {
         "request": request,
-        "agent_response": agent_response,
+        "agent_response": render_markdown(agent_response),
         "session_id": session_id,
         "form_data": json.dumps(form_data),
     })
@@ -146,7 +160,68 @@ async def confirm(
 
     return templates.TemplateResponse("results.html", {
         "request": request,
-        "plan": agent_response,
+        "plan": render_markdown(agent_response),
+    })
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# POST /swap — User requests recipe swap → repopulate recipes page
+# ─────────────────────────────────────────────────────────────────────────────
+
+@app.post("/swap", response_class=HTMLResponse)
+async def swap(
+    request: Request,
+    session_id: Annotated[str, Form()],
+    swap_request: Annotated[str, Form()],
+):
+    """Send swap request to agent, return updated recipe options on the same page."""
+    agent_response = await run_agent_turn(session_id, swap_request)
+
+    return templates.TemplateResponse("recipes.html", {
+        "request": request,
+        "agent_response": render_markdown(agent_response),
+        "session_id": session_id,
+    })
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# GET /chat — Start a fresh chat session
+# POST /chat — Send a message, return updated chat page
+# ─────────────────────────────────────────────────────────────────────────────
+
+@app.get("/chat", response_class=HTMLResponse)
+async def chat_page(request: Request):
+    """Open a fresh chat session — agent handles Phase 0 (name, consent, family setup)."""
+    session_id = str(uuid.uuid4())
+    await create_session(session_id)
+
+    return templates.TemplateResponse("chat.html", {
+        "request": request,
+        "session_id": session_id,
+        "history": [],
+        "history_json": "[]",
+    })
+
+
+@app.post("/chat", response_class=HTMLResponse)
+async def chat_message(
+    request: Request,
+    session_id: Annotated[str, Form()],
+    message: Annotated[str, Form()],
+    history: Annotated[str, Form()] = "[]",
+):
+    """Process a chat message and return updated chat page with conversation history."""
+    history_list = json.loads(history)
+    history_list.append({"role": "user", "text": message})
+
+    agent_response = await run_agent_turn(session_id, message)
+    history_list.append({"role": "agent", "html": render_markdown(agent_response)})
+
+    return templates.TemplateResponse("chat.html", {
+        "request": request,
+        "session_id": session_id,
+        "history": history_list,
+        "history_json": json.dumps(history_list),
     })
 
 

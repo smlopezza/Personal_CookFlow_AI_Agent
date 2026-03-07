@@ -2,6 +2,7 @@
 ADK agent runner for FastAPI integration.
 Manages sessions and runs the CookFlow root agent.
 
+Place this file at: api/agent_runner.py (sibling to cookflow_agent/)
 """
 
 import os
@@ -69,6 +70,8 @@ def build_form_prompt(data: dict) -> str:
     cooking_frequency = data.get("cooking_frequency", "batch cook once a week")
     max_minutes = data.get("max_total_minutes", 240)
     ingredients = data.get("available_ingredients", "")
+    kid_friendly = data.get("kid_friendly", False)
+    kid_str = "yes — mild flavours, simple textures, no complex spices" if kid_friendly else "no"
 
     if mode == "ingredient":
         return (
@@ -77,6 +80,7 @@ def build_form_prompt(data: dict) -> str:
             f"Household: {household_size} people. "
             f"Allergens: {allergens}. "
             f"Cuisines: {cuisines}. "
+            f"Kid-friendly: {kid_str}. "
             f"Max cooking time: {max_minutes} minutes."
         )
     else:
@@ -86,5 +90,6 @@ def build_form_prompt(data: dict) -> str:
             f"Allergens: {allergens}. "
             f"Cuisines: {cuisines}. "
             f"Cooking frequency: {cooking_frequency}. "
+            f"Kid-friendly: {kid_str}. "
             f"Max cooking time: {max_minutes} minutes."
         )
