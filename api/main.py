@@ -141,7 +141,7 @@ async def plan(
         "request": request,
         "agent_response": render_markdown(agent_response),
         "session_id": session_id,
-        "form_data": json.dumps(form_data),
+        "mode": mode,
     })
     html_response.set_cookie("user_id", user_id, max_age=30 * 24 * 3600)
     return html_response
@@ -175,6 +175,7 @@ async def swap(
     request: Request,
     session_id: Annotated[str, Form()],
     swap_request: Annotated[str, Form()],
+    mode: Annotated[str, Form()] = "weekly",
 ):
     """Send swap request to agent, return updated recipe options on the same page."""
     agent_response = await run_agent_turn(session_id, swap_request)
@@ -183,6 +184,7 @@ async def swap(
         "request": request,
         "agent_response": render_markdown(agent_response),
         "session_id": session_id,
+        "mode": mode,
     })
 
 

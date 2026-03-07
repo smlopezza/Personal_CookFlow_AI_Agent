@@ -46,7 +46,41 @@
     <div class="agent-response">{{ agent_response | safe }}</div>
   </div>
 
-  <!-- Action 1: Build the plan -->
+  {% if mode == "ingredient" %}
+
+  <!-- Mode A: user must pick one recipe -->
+  <div class="card p-4">
+    <label class="form-label fw-semibold">Which recipe would you like?</label>
+    <form action="/confirm" method="post" id="confirmForm">
+      <input type="hidden" name="session_id" value="{{ session_id }}">
+      <input type="text" class="form-control mb-3" name="selection"
+             placeholder="e.g. Option 1, or Option 2"
+             required autofocus>
+      <button type="submit" class="btn btn-success w-100 py-2 fw-semibold" id="confirmBtn">
+        Build my plan →
+      </button>
+    </form>
+  </div>
+
+  <div class="divider">— or —</div>
+
+  <div class="card p-4">
+    <label class="form-label fw-semibold">Want to swap something?</label>
+    <form action="/swap" method="post" id="swapForm">
+      <input type="hidden" name="session_id" value="{{ session_id }}">
+      <input type="hidden" name="mode" value="ingredient">
+      <input type="text" class="form-control mb-3" name="swap_request"
+             placeholder="e.g. Something vegetarian instead"
+             required>
+      <button type="submit" class="btn btn-outline-success w-100" id="swapBtn">
+        Update recipes
+      </button>
+    </form>
+  </div>
+
+  {% else %}
+
+  <!-- Mode B: confirm all 4 or swap -->
   <div class="card p-4 mb-2">
     <p class="text-muted small mb-2">Happy with these options?</p>
     <form action="/confirm" method="post" id="confirmForm">
@@ -61,11 +95,11 @@
 
   <div class="divider">— or —</div>
 
-  <!-- Action 2: Swap / change -->
   <div class="card p-4">
     <label class="form-label fw-semibold">Want to change or swap something?</label>
     <form action="/swap" method="post" id="swapForm">
       <input type="hidden" name="session_id" value="{{ session_id }}">
+      <input type="hidden" name="mode" value="weekly">
       <input type="text" class="form-control mb-3" name="swap_request"
              placeholder="e.g. Swap option 2 for something quicker, or make it vegetarian"
              required>
@@ -74,6 +108,8 @@
       </button>
     </form>
   </div>
+
+  {% endif %}
 
   <div class="text-center mt-3">
     <a href="/" class="text-muted small">← Start over</a>

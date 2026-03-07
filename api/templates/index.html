@@ -37,7 +37,7 @@
   </div>
   {% endif %}
 
-    <a href="/chat" class="d-block mt-3 text-center text-decoration-none">
+  <a href="/chat" class="d-block mt-3 mb-3 text-center text-decoration-none">
     <div style="border: 2px dashed #198754; border-radius: 12px; padding: 0.85rem 1rem; background: #f0faf4;">
       <span style="font-size: 1.1rem;">💬</span>
       <span class="fw-semibold text-success ms-1">Prefer to just talk?</span>
@@ -52,15 +52,15 @@
       <div class="mb-4">
         <label class="form-label fw-semibold">What would you like to do?</label>
         <div class="row g-2">
-          <div class="col-6">
-            <div class="mode-card selected" id="card-weekly" onclick="selectMode('weekly')">
+          <div class="col-6 d-flex">
+            <div class="mode-card selected h-100 w-100" id="card-weekly" onclick="selectMode('weekly')">
               <div class="fw-semibold">📋 Plan my week</div>
               <div class="text-muted small">Get 4 recipes, grocery list + cooking schedule</div>
               <input type="radio" name="mode" value="weekly" checked hidden id="mode-weekly">
             </div>
           </div>
-          <div class="col-6">
-            <div class="mode-card" id="card-ingredient" onclick="selectMode('ingredient')">
+          <div class="col-6 d-flex">
+            <div class="mode-card h-100 w-100" id="card-ingredient" onclick="selectMode('ingredient')">
               <div class="fw-semibold">🥕 Use what I have</div>
               <div class="text-muted small">Tell me what's in your fridge</div>
               <input type="radio" name="mode" value="ingredient" hidden id="mode-ingredient">
@@ -157,8 +157,6 @@
         </select>
       </div>
 
-
-
       <!-- Remember preferences -->
       <div class="mb-4">
         <div class="form-check">
@@ -176,8 +174,6 @@
 
     </form>
   </div>
-
-
 
 </div>
 
