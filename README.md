@@ -1,7 +1,7 @@
 # CookFlow — AI Meal Planning Agent
 
 ![CookFlow Logo](./cookflow_agent/src/cookflow.png)
-CookFlow is a multi-agent kitchen assistant that turns a conversation into a complete weekly meal plan: recipes, grocery list, and a cooking schedule tailored to how you actually cook.
+CookFlow is a multi-agent meal planning assistant for busy families. It handles recipes, grocery lists, and cooking schedules.
 
 Live: [personal-cookflow-ai-agent-594161647696.us-central1.run.app/](https://personal-cookflow-ai-agent-594161647696.us-central1.run.app/)
 Portfolio: [slopezza.com/portfolio_CookFlow_Agent](https://www.slopezza.com/portfolio_CookFlow_Agent)
