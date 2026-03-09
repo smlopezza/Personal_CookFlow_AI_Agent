@@ -95,6 +95,8 @@ def build_form_prompt(data: dict) -> str:
     ingredients = data.get("available_ingredients", "")
     kid_friendly = data.get("kid_friendly", False)
     kid_str = "yes — mild flavours, simple textures, no complex spices" if kid_friendly else "no"
+    notes = data.get("additional_notes", "").strip()
+    notes_str = f" Additional notes: {notes}." if notes else ""
 
     if mode == "ingredient":
         return (
@@ -105,6 +107,7 @@ def build_form_prompt(data: dict) -> str:
             f"Cuisines: {cuisines}. "
             f"Kid-friendly: {kid_str}. "
             f"Max cooking time: {max_minutes} minutes."
+            f"{notes_str}"
         )
     else:
         return (
@@ -115,4 +118,5 @@ def build_form_prompt(data: dict) -> str:
             f"Cooking frequency: {cooking_frequency}. "
             f"Kid-friendly: {kid_str}. "
             f"Max cooking time: {max_minutes} minutes."
+            f"{notes_str}"
         )

@@ -55,7 +55,14 @@ def render_markdown(text: str) -> str:
 
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
-CUISINE_OPTIONS = ["Colombian", "Canadian", "Mexican", "Italian", "Chinese", "Indian", "Any"]
+CUISINE_OPTIONS = [
+    "Any",
+    "Colombian", "Mexican", "Peruvian", "Brazilian", "Caribbean",
+    "Canadian", "USA",
+    "Italian", "French", "Greek", "Spanish",
+    "Indian", "Chinese", "Japanese", "Thai", "Vietnamese", "Korean",
+    "Middle Eastern", "Ethiopian",
+]
 FREQUENCY_OPTIONS = [
     ("batch", "Batch cook once a week"),
     ("few_times", "A few times a week"),
@@ -94,11 +101,13 @@ async def plan(
     household_size: Annotated[int, Form()],
     allergens: Annotated[str, Form()] = "",
     cuisines: Annotated[list[str], Form()] = [],
+    cuisine_other: Annotated[str, Form()] = "",
     cooking_frequency: Annotated[str, Form()] = "batch",
     max_total_minutes: Annotated[int, Form()] = 240,
     mode: Annotated[str, Form()] = "weekly",
     available_ingredients: Annotated[str, Form()] = "",
     kid_friendly: Annotated[bool, Form()] = False,
+    additional_notes: Annotated[str, Form()] = "",
     remember: Annotated[bool, Form()] = False,
     user_id: Annotated[Optional[str], Cookie()] = None,
 ):
@@ -111,15 +120,20 @@ async def plan(
 
     allergen_list = [a.strip() for a in allergens.split(",") if a.strip()]
 
+    cuisine_list = [c for c in cuisines if c != "Other"]
+    if cuisine_other.strip():
+        cuisine_list.append(cuisine_other.strip())
+
     form_data = {
         "mode": mode,
         "household_size": household_size,
         "allergens": allergen_list,
-        "cuisines": cuisines if cuisines else [],
+        "cuisines": cuisine_list if cuisine_list else [],
         "cooking_frequency": cooking_frequency,
         "max_total_minutes": max_total_minutes,
         "available_ingredients": available_ingredients,
         "kid_friendly": kid_friendly,
+        "additional_notes": additional_notes.strip(),
     }
 
     if remember:
@@ -127,7 +141,7 @@ async def plan(
             "household_size": household_size,
             "allergens": allergen_list,
             "condition_avoids": {},
-            "cultural_preferences": cuisines if cuisines else [],
+            "cultural_preferences": cuisine_list if cuisine_list else [],
             "cooking_frequency": cooking_frequency,
             "cooking_day": "",
             "grocery_day": "",
