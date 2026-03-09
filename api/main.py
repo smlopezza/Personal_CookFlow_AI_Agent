@@ -107,6 +107,7 @@ async def plan(
     mode: Annotated[str, Form()] = "weekly",
     available_ingredients: Annotated[str, Form()] = "",
     kid_friendly: Annotated[bool, Form()] = False,
+    complexity: Annotated[str, Form()] = "any",
     additional_notes: Annotated[str, Form()] = "",
     remember: Annotated[bool, Form()] = False,
     user_id: Annotated[Optional[str], Cookie()] = None,
@@ -133,6 +134,7 @@ async def plan(
         "max_total_minutes": max_total_minutes,
         "available_ingredients": available_ingredients,
         "kid_friendly": kid_friendly,
+        "complexity": complexity,
         "additional_notes": additional_notes.strip(),
     }
 
