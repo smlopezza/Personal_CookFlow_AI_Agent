@@ -1,83 +1,206 @@
-# Personal CookFlow AI Agent
+# CookFlow — AI Meal Planning Agent
 
 ![CookFlow Logo](./cookflow_agent/src/cookflow.png)
-Capstone Project submitted as part of the [5-Day AI Agents Intensive Course with Google (Nov 10 - 14, 2025)](https://www.kaggle.com/competitions/agents-intensive-capstone-project/overview)
+CookFlow is a multi-agent kitchen assistant that turns a conversation into a complete weekly meal plan: recipes, grocery list, and a cooking schedule tailored to how you actually cook.
 
-🍴 **The Kitchen Chaos** <br>
-Meal planning can feel like juggling knives: grocery lists, nutrition goals, and time constraints often push couples and families toward takeout or skipped meals. CookFlow transforms that stress into simplicity: a one‑day batch‑cooking ritual that clears mental clutter and fills your fridge with ready‑to‑go meals for the week.
+Live: [personal-cookflow-ai-agent-594161647696.us-central1.run.app/](https://personal-cookflow-ai-agent-594161647696.us-central1.run.app/)
+Portfolio: [slopezza.com/portfolio_CookFlow_Agent](https://www.slopezza.com/portfolio_CookFlow_Agent)
 
-[Deployed Agent Link](https://cookflow-ai-agent-service-594161647696.us-central1.run.app)
+---
 
-📹 **See It in Action**<br>
-[![CookFlow Demo](https://img.youtube.com/vi/HuU-sYjRX2U/0.jpg)](https://youtu.be/HuU-sYjRX2U)
+## About This Project
 
-👩‍🍳 **Enter the Sous‑Chef Agent**<br>
-Static apps give you recipes. Agents adapt to your life. CookFlow acts like a smart sous‑chef: learning your preferences and remembering past meals so you don’t repeat too often. It guides you through prep with just enough structure to keep things flowing, not rigid, but collaborative.
+CookFlow has been built across two phases, each with a different scope and learning objective.
 
-🛠️ **How CookFlow Works**<br>
-CookFlow isn’t just another app — it’s a team of specialized agents working in harmony:
-- *Root Agent:* clarifies your goals, asks the right questions, and orchestrates the flow.
-- *User Preferences Agent:* remembers your household size, diet, allergies, and pantry staples so every plan fits your life.
-- *Recipe Finder Agent:* searches the web for fresh, batch‑friendly recipes that match your constraints.
-- *Grocery Planner Agent:* consolidates ingredients into a categorized shopping list, subtracting what you already have.
-- *Batch Cooking Agent:* turns recipes into a calm, step‑by‑step cooking ritual with cookware assignments and timing.
-- *Meal Distribution Agent:* balances nutrition and variety, mapping dishes into a weekly calendar of lunches and dinners.
+**V1** was a 5-day sprint during [Google's AI Agents Intensive Course](https://www.kaggle.com/learn-guide/5-day-agents) (November 2025) — a rapid prototype to explore multi-agent coordination with Google ADK and Gemini.
 
-**The result:** one seamless flow from intent → discovery → shopping → cooking → distribution. No schema drift, no clutter — just a fridge full of labeled, ready‑to‑go meals.
+**V2** is a 7-week rebuild during the [LLM Agents Bootcamp](https://ai.science/products-services/llm-agents-bootcamp) by Aggregate Intellect (January–March 2026) — a production-quality iteration driven by real user research, a formal evaluation framework, and deployment to real users.
 
-⏰ **The Weekend Ritual**<br>
-Saturday morning isn’t just for errands anymore — it’s the launchpad for your week. CookFlow turns a few focused hours into a ritual:
-- *Plan once, eat all week:* the Root Agent lines up recipes that match your preferences and pantry.
-- *Shop smarter:* the Grocery Planner consolidates everything into a clear, categorized list so you breeze through the store.
-- *Cook in flow:* the Batch Cooking Agent guides you step‑by‑step, staging tasks so you chop, simmer, and roast without chaos.
-- *Portion with ease:* the Meal Distribution Agent maps meals into containers labeled by day and meal, ready to grab and go.
+---
 
-By Sunday evening, your fridge is stocked, your mind is clear, and the week ahead feels lighter. CookFlow makes meal prep less of a chore and more of a ritual — one that saves time, reduces stress, and keeps variety on the table.
+## Version 1 — 5-Day Prototype (November 2025)
 
-🧑‍💻 **Behind the Apron**<br>
-CookFlow isn’t just recipes — it’s infrastructure.
-- *Built in Python:* modular agent architecture, clean JSON contracts, and extensible workflows make it easy to adapt.
-- *Deployed on GCP Cloud Run:* serverless scaling ensures agents spin up only when needed, keeping costs lean and performance sharp.
-- *Orchestrated agents:* Root, Preferences, Finder, Planner, Batch Cooking, and Distribution all run as independent services, coordinated seamlessly.
-- *Shared session context:* every agent reads from the same source of truth, so preferences, pantry, and provenance stay consistent end‑to‑end.
+> Branch: [`CookFlow_v1.0`](https://github.com/smlopezza/Personal_CookFlow_AI_Agent/tree/CookFlow_v1.0)
 
-**The result:** a resilient, cloud‑native sous‑chef that grows with your household, balancing technical rigor with everyday usability.
+Built in 5 days as a capstone for Google's intensive AI Agents course. The goal was to go from zero to a working multi-agent system fast.
 
-![Architecture](./cookflow_agent/src/Architecture.png)
+### Architecture
 
-📊 **Testing the Sous‑Chef**<br>
-No agent is complete without tasting its own recipes. To evaluate CookFlow, I reached out to people in my network for hands‑on testing.
-[Download Analyzed Conversations](./cookflow_agent/src/CookFlow_Agent_Conversations.txt)
+Six specialized agents orchestrated by a root coordinator:
+
+| Agent | Role |
+|---|---|
+| Root Agent | Clarifies goals, collects preferences, orchestrates flow |
+| User Preferences Agent | Stores household size, allergens, pantry |
+| Recipe Finder Agent | Searches the web for batch-friendly recipes |
+| Grocery Planner Agent | Consolidates ingredients into a categorized shopping list |
+| Batch Cooking Agent | Generates step-by-step cooking schedules with parallelization |
+| Meal Distribution Agent | Maps meals into a weekly calendar with reheating instructions |
+
+**Stack:** Python · Google ADK · Gemini 2.0 Flash · GCP Cloud Run · ADK default chat UI
+
+### Testing Results
+
+- ~15 real conversations with friends and colleagues
+- Overall satisfaction: 3.75/5
+- ~60% end-to-end completion rate
+- Key failures: recipe retrieval on zero constraints, mobile UI unusable, API quota exhaustion on free tier
+
+### What V1 Taught
+
+The 6-agent pipeline was architecturally clean but expensive — each user message triggered 30–50+ Gemini API calls across agent handoffs. The Recipe Finder was the single point of failure: it could not discover recipes from natural language without specific names. And the ADK default UI was not usable on mobile, which is where most users were.
+
+These findings directly drove the V2 redesign.
+
+---
+
+## Version 2 — Production Rebuild (January–March 2026)
+
+Built during the 7-week [LLM Agents Bootcamp](https://ai.science/products-services/llm-agents-bootcamp) by Aggregate Intellect, a program focused on taking agentic AI systems from prototype to production. V2 addressed every critical failure from V1 through a structured engineering process: user research → architecture redesign → iterative prompt engineering → LLM-as-Judge evaluation → observability → real user deployment.
+
+### What Changed
+
+| Dimension | V1 | V2 |
+|---|---|---|
+| Architecture | 6 agents | 3 agents + tools |
+| UI | ADK default chat | Custom FastAPI web app, mobile-first |
+| Recipe retrieval | Google Search only | Google Search + curated fallback DB |
+| User memory | In-memory only | Firestore with explicit consent flow |
+| Evaluation | Manual spot-check | LLM-as-Judge across 11 test cases × 2 paths |
+| Observability | None | Cloud Trace + Cloud Logging + Cloud Monitoring |
+| Cooking modes | Batch only | Daily / few times a week / batch |
+| API tier | Free (20 req/day) | Paid (no quota risk) |
+| Mobile support | Broken | Responsive, tested |
+
+---
+
+### Architecture (V2)
+
+Reduced from 6 agents to 3 by consolidating responsibilities and replacing agent-to-agent handoffs with tool calls on the root agent. Each Gemini API call now does more work.
+
+```
+Root Agent
+├── recipe_finder        (sub-agent)  — Google Search + URL safety net
+├── meal_prep_planner    (sub-agent)  — grocery list + cooking schedule + meal plan
+├── process_recipes      (tool)       — allergen filter + time extraction
+├── recipe_db_fallback   (tool)       — curated recipe DB when search returns empty
+├── build_grocery_list   (tool)       — consolidate + scale ingredients
+├── load_user_profile    (tool)       — Firestore read
+├── save_user_profile    (tool)       — Firestore write (consent-gated)
+└── delete_user_profile  (tool)       — Firestore delete (right to erasure)
+```
+
+**Stack:** Python · Google ADK v1.4.1 · Gemini 2.5 Flash · FastAPI · GCP Cloud Run · Firestore · Cloud Trace · Cloud Logging · Cloud Monitoring · OpenTelemetry
+
+### Two Operating Modes
+
+**Mode A — Ingredient-first:** User lists what they have. Agent returns 3 recipe options buildable from those ingredients, then a grocery list for only the missing items and step-by-step cooking instructions.
+
+**Mode B — Weekly plan:** Agent plans a full week. Recipe count and cooking schedule adapt to how the user cooks:
+
+| Cooking frequency | Recipes | Schedule type |
+|---|---|---|
+| Daily | 5 (one per night, ≤45 min each) | Per-night guide — cook fresh each evening |
+| Few times a week | 4 | Two cooking sessions, split across the week |
+| Batch (once a week) | 4 | Single parallelized session |
+
+Grocery list is always weekly regardless of cooking frequency.
+
+### Key Engineering Decisions
+
+**URL safety net:** The Recipe Finder agent harvests verified URLs from Google Search grounding metadata before the model responds. Any URL in the model's output that was not in the verified set is automatically nulled out — preventing hallucinated recipe links from reaching the user.
+
+**Recipe DB fallback:** A curated database of 50+ proven recipes is queried when Google Search returns empty results. The agent never returns "no results" — it always offers alternatives.
+
+**Consent-gated persistence:** User profiles (household size, allergens, cuisine preferences, cooking frequency) are saved to Firestore only after explicit opt-in. Users can delete their data at any time by asking the agent.
+
+**Structured prompt contracts:** Agent-to-agent context is passed as validated JSON with explicit field contracts, reducing hallucination at handoff boundaries.
+
+---
+
+### Evaluation Framework
+
+V2 was evaluated using an **LLM-as-Judge** approach: a separate Gemini instance scores each agent response across three dimensions without human bias.
+
+**Test suite:** 11 test cases × 2 interaction paths (form submission and chat) = 22 evaluated runs
+
+**Scoring dimensions (1–5 each):**
+
+| Dimension | What it measures |
+|---|---|
+| Result Presence | Did the agent return the expected number of recipes? |
+| Constraint Compliance | Were allergens, time limits, and dietary restrictions respected? |
+| URL Integrity | Do the source links point to real, accessible recipes? |
 
 
-- *Limitations:* With a small, familiar sample group, results are preliminary and may skew positive. <br>
 
-- *Survey responses:* 4 participants shared structured feedback on usability, clarity, and recipe relevance. <br>
-&nbsp; - Ease of use: Most testers found the chat interface intuitive, with average ratings of 4.25/5. <br>
-&nbsp; - Mealplan success: In the majority of conversations, the agent produced complete weekly mealplans; a smaller subset stalled or returned partial outputs. <br>
-&nbsp; - Stress reduction: Only 2 of the respondents reported some reduction in meal‑planning stress. <br>
-&nbsp; - Strengths: Clear grocery lists with quantities, organized workflows, and cultural recipe variety were praised. <br>
-&nbsp; - Limitations: Slow response times, occasional errors retrieving recipes, limited memory of servings, and mobile usability issues. <br>
-&nbsp; - Overall satisfaction: Survey participants rated their experience neutral (3.75/5), with one of them highlighting critical gaps. <br>
-&nbsp; - Users appreciated the intuitive prompts and smooth orchestration across agents, though they noted opportunities for broader recipe variety and more nuanced pantry handling. <br> <br>
+---
 
-- *Conversations analyzed:* 15 real interactions with the agent revealed how well it adapted to preferences and guided cooking flow. <br>
-&nbsp; - Mealplan success: In ~9 of 15 conversations, the agent produced complete weekly mealplans; ~6 stalled or returned partial outputs. <br>
-&nbsp; - Common issues: slow response, missing recipes for specific cuisines, memory gaps, mobile formatting. <br>
-&nbsp; - Strengths: clear grocery lists, structured cooking flow, stress reduction, cultural variety. <br> <br>
+### Observability
 
-- *Pressure testing* <br>
-&nbsp; - The agent handled conversations in Spanish, though inconsistently, as multilingual support was not explicitly designed. <br>
-&nbsp; - One user attempted to access environment variables; the agent correctly safeguarded data, demonstrating resilience against unsafe inputs. <br> <br>
+GCP-native monitoring stack:
 
+- **Cloud Trace** — OpenTelemetry spans per agent call with attributes for recipe count, time overage flags, and allergen context
+- **Cloud Logging** — Structured JSON logs per agent event with recipe names, constraint payloads, and error codes
+- **Cloud Monitoring** — Custom metrics dashboards tracking recipe count distribution, schedule completeness, and agent latency
+- **Alerting** — Policies for recipe count anomalies and recipes missing from the cooking schedule
 
-**Next steps:** Expand testing to a larger, more diverse audience to validate adaptability and uncover edge cases.
+---
 
-🌱 **What’s Next on the Menu**<br>
-- Pantry scanning via barcode or photo
-- Seasonal produce suggestions and local deal matching
-- Voice-first cooking guidance
-- Health app integrations for personalized nutrition
-- A social layer for sharing batch-cook wins and recipes
+### User Research
 
+V2 improvements were grounded in structured user research:
 
+- 12 user interviews (30 min each)
+- Key pain points identified: slow response times, recipe retrieval failures, mobile inaccessibility, over-clarification before acting
+- Tested with 5 real household users post-deployment: diverse cooking frequencies (daily, weekly batch, weekends), one safety-critical celiac constraint
+
+---
+
+## Running Locally
+
+```bash
+git clone https://github.com/smlopezza/Personal_CookFlow_AI_Agent.git
+cd Personal_CookFlow_AI_Agent
+
+pip install -r cookflow_agent/requirements.txt
+
+# Set environment variables
+cp .env.example .env
+# Add: GOOGLE_API_KEY, GOOGLE_CLOUD_PROJECT, ROOT_AGENT_MODEL, RECIPE_FINDER_MODEL, MEAL_PREP_PLANNER_MODEL
+
+# Authenticate with GCP for Firestore access
+gcloud auth application-default login
+
+# Start the FastAPI server from the repo root
+uvicorn api.main:app --reload
+```
+
+Open `http://localhost:8000` in your browser.
+
+**Requirements:**
+- GCP project with Firestore enabled (Native mode)
+- Gemini API key — paid tier recommended (free tier exhausts at ~3 conversation turns in the multi-agent pipeline)
+
+---
+
+## Tech Stack Summary
+
+| Layer | Technology |
+|---|---|
+| Agent framework | Google ADK (Agents Development Kit) v1.4.1 |
+| LLM | Gemini 2.5 Flash |
+| Web framework | FastAPI |
+| Persistent storage | GCP Firestore |
+| Deployment | GCP Cloud Run (serverless, auto-scaling) |
+| Observability | OpenTelemetry · Cloud Trace · Cloud Logging · Cloud Monitoring |
+| Evaluation | LLM-as-Judge (Gemini) · custom test runner |
+| Language | Python 3.11 |
+
+---
+
+## About the Author
+
+Sandra Lopez — Senior Data Scientist at Scotiabank, PhD Chemical Engineering (Western University). Working at the intersection of production ML systems and agentic AI.
+
+[LinkedIn](https://www.linkedin.com/in/slopezza/) · [Portfolio](https://www.slopezza.com)
