@@ -175,7 +175,7 @@ def after_model_callback(callback_context: CallbackContext, llm_response: LlmRes
 # ── Agent ─────────────────────────────────────────────────────────────────────
 
 recipe_finder_agent = Agent(
-    name="Recipe_Finder_Agent",
+    name="recipe_finder",
     model=Gemini(model=RECIPE_FINDER_MODEL),
     description="Search for recipes based on user constraints and return structured results with real URLs.",
     instruction=RECIPE_FINDER_AGENT_INSTRUCTIONS,

@@ -10,7 +10,7 @@ load_dotenv()
 MEAL_PREP_PLANNER_MODEL = os.getenv("MEAL_PREP_PLANNER_MODEL", "gemini-2.5-flash")
 
 meal_prep_planner_agent = Agent(
-    name="Meal_Prep_Planner_Agent",
+    name="meal_prep_planner",
     model=Gemini(model=MEAL_PREP_PLANNER_MODEL),
     description=(
         "Generates a consolidated grocery list, a cooking schedule, and a weekly meal plan "
