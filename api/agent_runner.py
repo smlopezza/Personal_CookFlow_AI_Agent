@@ -14,6 +14,9 @@ from google.genai import types
 # Import root agent from existing cookflow_agent package
 from cookflow_agent.agent import root_agent
 
+import time
+import logging
+
 APP_NAME = "cookflow"
 USER_ID = "web_user"  # single-user for now; replace with session cookie later
 
@@ -39,6 +42,9 @@ async def run_agent_turn(session_id: str, message: str) -> str:
     Send a message to the agent and return the final text response.
     Reuses an existing session so conversation state is preserved between turns.
     """
+    start_time = time.time()
+    logging.info({"event": "session_start", "session_id": session_id})
+    
     content = types.Content(
         role="user",
         parts=[types.Part(text=message)],
@@ -55,6 +61,9 @@ async def run_agent_turn(session_id: str, message: str) -> str:
                 for part in event.content.parts:
                     if hasattr(part, "text") and part.text:
                         response_text += part.text
+
+    duration_ms = int((time.time() - start_time) * 1000)                                                                       
+    logging.info({"event": "session_end", "session_id": session_id, "duration_ms": duration_ms})
 
     return response_text
 
