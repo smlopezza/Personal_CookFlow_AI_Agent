@@ -70,7 +70,7 @@
     <!-- Streaming: content populated progressively by SSE -->
     <div class="loading-indicator" id="loadingIndicator">
       <div class="spinner-border mb-2"></div>
-      <p class="small mb-0">Building your weekly plan...</p>
+      <p class="small mb-0">Building your weekly plan... This may take a few minutes...</p>
     </div>
     <div class="plan-content" id="planContent" style="display:none;"></div>
 
@@ -94,6 +94,17 @@
 
 <script>
   {% if loading %}
+  function reportLatency(flow) {
+      const t0 = parseInt(sessionStorage.getItem('ux_t0') || '0');
+      if (!t0) return;                                                          
+      sessionStorage.removeItem('ux_t0');                                       
+      fetch('/log/latency', {                                                   
+        method: 'POST',                                                         
+        headers: { 'Content-Type': 'application/json' },                        
+        body: JSON.stringify({ flow: flow, latency_ms: Date.now() - t0 })
+      }).catch(() => {});                                                       
+    }    
+
   // ── SSE streaming ──────────────────────────────────────────────────────────
   const streamUrl = "{{ stream_url }}";
   const planDiv = document.getElementById("planContent");
@@ -110,6 +121,7 @@
       loadingDiv.style.display = "none";
       planDiv.style.display = "block";
       actionButtons.style.display = "flex";
+      reportLatency('plan');
       return;
     }
 

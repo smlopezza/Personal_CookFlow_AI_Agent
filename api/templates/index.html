@@ -245,6 +245,7 @@
   }
 
   document.getElementById('planForm').addEventListener('submit', function() {
+    sessionStorage.setItem('ux_t0', Date.now());
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Finding recipes...';

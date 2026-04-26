@@ -347,6 +347,17 @@ async def chat_message(
         "history_json": json.dumps(history_list),
     })
 
+# ─────────────────────────────────────────────────────────────────────────────
+# POST /log/latency — Client-side UX latency telemetry
+# ─────────────────────────────────────────────────────────────────────────────
+
+@app.post("/log/latency")
+async def log_latency(request: Request):
+    """Receive and log user-perceived latency from the browser."""
+    payload = await request.json()
+    import logging
+    logging.info(json.dumps({"event": "ux_latency", **payload}))
+    return {"ok": True}
 
 # ─────────────────────────────────────────────────────────────────────────────
 # POST /forget — User withdraws consent, delete Firestore profile

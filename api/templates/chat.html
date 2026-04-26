@@ -171,10 +171,26 @@
 
   // Show typing indicator on send
   document.getElementById('chatForm').addEventListener('submit', function() {
+    sessionStorage.setItem('ux_t0', Date.now());
     document.getElementById('typing').style.display = 'flex';
     document.getElementById('sendBtn').disabled = true;
     msgs.scrollTop = msgs.scrollHeight;
   });
+
+  // Measure UX latency for chat (full page reload = response is in the DOM)
+  document.addEventListener('DOMContentLoaded', function () {
+      const t0 = parseInt(sessionStorage.getItem('ux_t0') || '0');
+      if (t0) {
+          const latencyMs = Date.now() - t0;
+          sessionStorage.removeItem('ux_t0');
+          fetch('/log/latency', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ flow: 'chat', latency_ms: latencyMs })
+          }).catch(() => {});
+      }
+  });
+
 </script>
 
 </body>
