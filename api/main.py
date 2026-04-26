@@ -23,6 +23,7 @@ import json
 import os
 import re
 import markdown as md
+import time
 
 from fastapi import FastAPI, Request, Form, Cookie, Response
 from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
@@ -154,7 +155,7 @@ async def plan(
     await create_session(session_id)
 
     prompt = build_form_prompt(form_data)
-    _pending[session_id] = prompt  # consumed by /stream/plan
+    _pending[session_id] = {"prompt": prompt, "t0": time.time()}  # consumed by /stream/plan
 
     html_response = templates.TemplateResponse("recipes.html", {
         "request": request,
@@ -173,9 +174,12 @@ async def stream_plan(session_id: str):
     SSE endpoint: stream recipe finder output for a pending /plan session.
     The browser connects here via EventSource after receiving the loading page.
     """
-    prompt = _pending.pop(session_id, None)
-    if not prompt:
+    pending = _pending.pop(session_id, None)
+    if not pending:
         return Response("Session not found", status_code=404)
+    
+    prompt = pending["prompt"]
+    t0 = pending["t0"] 
 
     async def generate():
         try:
@@ -183,6 +187,10 @@ async def stream_plan(session_id: str):
                 yield f"data: {json.dumps(chunk)}\n\n"
         except Exception as e:
             yield f"data: {json.dumps('[ERROR] ' + str(e))}\n\n"
+        
+        elapsed = round(time.time() - t0, 2)
+        print(json.dumps({"event": "plan_latency", "session_id": session_id, "latency_seconds": elapsed}), flush=True)
+        
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(
@@ -206,7 +214,7 @@ async def confirm(
     Store user selection and return results page in loading state.
     The page connects to /stream/confirm via SSE to receive the full plan.
     """
-    _pending[session_id] = selection  # consumed by /stream/confirm
+    _pending[session_id] = {"prompt": selection, "t0": time.time()}  # consumed by /stream/confirm
 
     return templates.TemplateResponse("results.html", {
         "request": request,
@@ -221,9 +229,12 @@ async def stream_confirm(session_id: str):
     """
     SSE endpoint: stream full meal plan output for a pending /confirm session.
     """
-    selection = _pending.pop(session_id, None)
-    if not selection:
+    pending = _pending.pop(session_id, None)
+    if not pending:
         return Response("Session not found", status_code=404)
+    
+    selection = pending["prompt"]                                                                                                  
+    t0 = pending["t0"] 
 
     async def generate():
         try:
@@ -231,6 +242,10 @@ async def stream_confirm(session_id: str):
                 yield f"data: {json.dumps(chunk)}\n\n"
         except Exception as e:
             yield f"data: {json.dumps('[ERROR] ' + str(e))}\n\n"
+
+        elapsed = round(time.time() - t0, 2)
+        print(json.dumps({"event": "confirm_latency", "session_id": session_id, "latency_seconds": elapsed}), flush=True)
+        
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(
@@ -252,7 +267,7 @@ async def swap(
     mode: Annotated[str, Form()] = "weekly",
 ):
     """Store swap request and return recipes page in loading state."""
-    _pending[session_id] = swap_request
+    _pending[session_id] = {"prompt": swap_request, "t0": time.time()}
 
     return templates.TemplateResponse("recipes.html", {
         "request": request,
@@ -266,9 +281,12 @@ async def swap(
 @app.get("/stream/swap")
 async def stream_swap(session_id: str):
     """SSE endpoint: stream updated recipe options after a swap request."""
-    swap_request = _pending.pop(session_id, None)
-    if not swap_request:
+    pending = _pending.pop(session_id, None)
+    if not pending:
         return Response("Session not found", status_code=404)
+    
+    swap_request = pending["prompt"]
+    t0 = pending["t0"]
 
     async def generate():
         try:
@@ -276,6 +294,10 @@ async def stream_swap(session_id: str):
                 yield f"data: {json.dumps(chunk)}\n\n"
         except Exception as e:
             yield f"data: {json.dumps('[ERROR] ' + str(e))}\n\n"
+
+        elapsed = round(time.time() - t0, 2)
+        print(json.dumps({"event": "swap_latency", "session_id": session_id, "latency_seconds": elapsed}), flush=True)
+
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(
